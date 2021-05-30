@@ -1,0 +1,608 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Eero Viittala Homepage</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+    </head>
+
+    <body>
+        <header class="top">
+            <h1 id="top">Eero Viittala homepage</h1>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="../index.html">HOME</a></li>
+                <li class="selected"><a href="challenges.html">CHALLENGES</a></li>
+                <li><a href="../vim/vim.html">VIM</a></li>
+                <li><a href="../games/games.html">GAMES</a></li>
+            </ul>
+        </nav>
+
+        <div id="tableContainer">
+            <div id="tableRow">
+                <div id="sidebar">
+                    <nav>
+                        <ol>
+                            <li><a href="#UNITTEST">Unit Test Setup</a></li>
+                            <li><a href="#LCD">1. LCD Calculator</a></li>
+                            <li><a href="#PYRAMID">2. Pyramid</a></li>
+                            <li><a href="#COINS">3. Coins</a></li>
+                            <li><a href="#FLIGHTS">4. Flights</a></li>
+                            <li><a href="#PRIME">5. Prime number</a></li>
+                            <li><a href="#LINKEDLIST">6. Linked list</a></li>
+                            <li><a href="#VALUETOHEX">7. Value to hex</a></li>
+                            <li><a href="#SWAPPER">8. Text Swapper</a></li>
+                            <li><a href="#SORTANDUNIQUE">9. Sort and Unique</a></li>
+                            <li><a href="#DIVISIBLENUMBER">10. Find smallest divisible positive number</a></li>
+                            <li><a href="#CALCULATEPOINTS">11. Calculate Points</a></li>
+							<li><a href="#CHESS">12. Chess</a></li>
+							<li><a href="#CRC">13. CRC</a></li>
+							<li><a href="#MULTIPLICATION">14. Multiplication</a></li>
+                        </ol>
+                    </nav>
+                </div>
+               <!-- <div id="main"> -->
+                <aside>
+                    <article id="UNITTEST">
+                        <header>
+                            <h1>How to setup unit test environment in Windows and with MINGW</h1>
+                        </header>
+                        <p>
+                            <ol>
+                                <li>mkdir test</li>
+                                <li>cd  test</li>
+                                <li>git clone https://github.com/google/googletest.git</li>
+                                <li>add these files to your test-folder
+                                <ul>
+                                    <li><a href="CMakeLists.txt">CMakeLists.txt </a></li> 
+                                    <li><a href="Test.cpp">Test.cpp</a></li>
+                                </ul>
+                                </li>
+                                <li>mkdir build</li>
+                                <li>cd build</li>
+                                <li>cmake -G "MSYS Makefiles" ..</li>
+                                <li>cmake --build .</li>
+                                <li>Test.exe</li>
+                            </ol>
+                        </p>
+                        <p>
+                        TODO: Eero add here unit tests in python
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="LCD">
+                        <header>
+                            <h1>1. LCD Calculator</h1>
+                        </header>
+                        <p>
+                            Make a program which converts given string of values to LCD-style and calculates sum.
+<pre>(each digit is 3 lines high)
+ _     _  _     _  _  _  _  _
+| |  | _| _||_||_ |_   ||_||_| _  _| _
+|_|  ||_  _|  | _||_|  ||_| _|       _</pre>Please note: Plus digit is '_|', since LCD cannot produce proper '+' sign.  
+
+                            <br>
+                            <br>
+                            <b>Input:</b> 34 + 94 - 4
+                            <br>
+                            <b>Output:</b> 
+<pre>
+_              _                             _
+_||_|    _|   |_||_|    _    |_|    _      | _||_|
+_|  |          _|  |           |    _      ||_   |</pre>
+
+                            <br>
+                            <br>
+                            <b>Input:</b> 4 - 94 + 5
+                            <br>
+                            <b>Output:</b> 
+<pre>
+             _              _              _  _
+|_|    _    |_||_|    _|   |_     _     _ |_||_
+  |          _|  |          _|    _       |_| _|</pre>
+                            <br>
+                            <br>
+                            <b>Input:</b> -8 + 44 + 5
+                            <br>
+                            <b>Output:</b> 
+<pre>
+    _                          _
+ _ |_|    _|   |_||_|    _|   |_     _    |_|  |
+   |_|           |  |          _|    _      |  |</pre>
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionLcdCalc.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="PYRAMID">
+                        <header>
+                            <h1>2. Find the maximum total of the pyramid</h1>
+                        </header>
+                        <p>
+                            Calculate maximum total from top to bottom of the pyramid. By starting at the top of the
+                            triangle and moving to adjacent numbers on the row
+                            <br>
+                            <br>
+                            <b>Input:</b> {{3}, {4, 3}, {2, 7, 9}, {8, 5, 9, 3}}
+<pre>   <mark>3</mark>
+  4 <mark>3</mark>
+ 2 7 <mark>9</mark>
+8 5 <mark>9</mark> 3</pre>  
+                            <br>
+                            <b>Output:</b> {3, 3, 9, 9} and result is 24 
+                            <br>
+                            <br>
+                            <b>Input:</b> {{75}, {95, 64}, {17, 47, 82}, {18, 35, 87, 10}, {20, 4, 82, 47, 65}, {19, 1, 23, 75, 3, 34}, {88, 2, 77, 73, 7, 63, 67}, {99, 65, 4, 28, 6, 16, 70, 92}, {41, 41, 26, 56, 83, 40, 80, 70, 33}, {41, 48, 72, 33, 47, 32, 37, 16, 94, 29}, {53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14}, {70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57}, {91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48}, {63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31}, {4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}}
+<pre>        
+              <mark>75</mark> 
+             95 <mark>64</mark> 
+            17 47 <mark>82</mark> 
+           18 35 <mark>87</mark> 10 
+          20 04 <mark>82</mark> 47 65 
+         19 01 23 <mark>75</mark> 03 34 
+        88 02 77 <mark>73</mark> 07 63 67 
+       99 65 04 <mark>28</mark> 06 16 70 92 
+      41 41 26 56 <mark>83</mark> 40 80 70 33 
+     41 48 72 33 47 <mark>32</mark> 37 16 94 29 
+    53 71 44 65 25 43 <mark>91</mark> 52 97 51 14 
+   70 11 33 28 77 73 17 <mark>78</mark> 39 68 17 57 
+  91 71 52 38 17 14 91 43 <mark>58</mark> 50 27 29 48 
+ 63 66 04 68 89 53 67 30 <mark>73</mark> 16 69 87 40 31 
+04 62 98 27 23 09 70 98 73 <mark>93</mark> 38 53 60 04 23</pre>  
+                            <br>
+                            <b>Output:</b> {75, 64, 82, 87, 82, 75, 73, 28, 83, 32, 91, 78, 58, 73, 93} and result is 1074
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionPyramid.html">See solution</a>
+                        </p>
+                    </article>
+                    
+                    <hr>
+                    
+                    <article id="COINS">
+                        <header>
+                            <h1>3. Coins: Write program how many different ways where 2&#8364 can be made using any number of coins</h1>
+                        </header>
+                        <p>
+                            In the EU the currency is made up of Euro (&#8364) and  Cent(c). There are eight coins in general circulation:
+                            1c, 2c, 5c, 10c, 20c, 50c, 1&#8364 (100c), and 2&#8364 (200c).
+                            It is possible to make 2&#8364 in the following way:
+                            1x1&#8364 + 1x50c + 2x20c + 1x5c + 1x2c + 3x1c. 
+                            Write a program to find different ways where 2&#8364 can be made using any number of coins.
+                            <br>
+                            <br>
+                        </p>
+                        <p>
+                            <b>Input:</b> 1c, 2c, 5c, 10c, 20c, 50c, 100c, 200c
+                            <br>
+                            <b>Output:</b> 73682
+                        </p>
+                        <p class="solutions">
+                            See solution in
+                            <a href="solutionCoinsC++.html">C++</a>
+                            or
+                            <a href="solutionCoinsPython.html">Python</a>
+                        </p>
+                    </article>
+                    
+                    <hr>
+
+                    <article id="FLIGHTS">
+                        <header>
+                            <h1>4. Flights. Find route from given list of flights</h1>
+                        </header>
+                        <p>
+                            Write program to find route from given list of itinerary. All routes have departure airport and
+                            destination airport and starting airport. If there are multiple possible
+                            itineraries, return the lexicographically smallest one. If incorrect route, return error.
+
+                            <br>
+                            <br>
+                        </p>
+                        <p>
+                            <b>Input:</b> {{"SFO", "HKO"}, {"YYZ", "SFO"}, {"YUL", "YYZ"}, {"HKO", "ORD"}} and departure airport "YUL"
+                            <br>
+                            <b>Output:</b> YUL -&gt; YYZ -&gt; SFO -&gt; HKO -&gt; ORD
+                        </p>
+                        <p>
+                            <b>Input:</b> {{"SFO", "COM"}, {"COM", "YYZ"}} and departure airport "COM"
+                            <br>
+                            <b>Output:</b> Error
+                        </p>
+                        <p>
+                            <b>Input:</b> {{"A", "C"}, {"A", "B"}, {"B", "C"}, {"C", "A"}} and departure airport "A"
+                            <br>
+                            <b>Output:</b> A -&gt; B -&gt; C -&gt; A -&gt; C
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionFlights.html">See solution</a>
+                        </p>
+                    </article>
+
+                    <hr>
+                    <article id="PRIME">
+                        <header>
+                            <h1>5. Prime number</h1>
+                        </header>
+                        <p>
+                            Write a program to find the largest prime factor of a given number.<br>
+                            The prime factors of 330 are 2, 3, 5, 11. Therefore 11 is the largest prime factor of 330.
+                            <br>
+                            <br>
+                        </p>
+                        <p>
+                            <b>Input:</b> 200
+                            <br>
+                            <b>Output:</b> Largest prime factor is 5
+                        </p>
+                        <p>
+                            <b>Input:</b> 330
+                            <br>
+                            <b>Output:</b> Largest prime factor is 11
+                        </p>
+                        <p>
+                            <b>Input:</b> 12034
+                            <br>
+                            <b>Output:</b> Largest prime factor is 547 
+                        </p>
+                        <p>
+                            <b>Input:</b> 243423423330
+                            <br>
+                            <b>Output:</b> Largest prime factor is 1114117
+                        </p>
+                        <p>
+                            <b>Input:</b> 334546577321234
+                            <br>
+                            <b>Output:</b> Largest prime factor is 6691397
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionPrimeNumber.html">See solution</a>
+                        </p>
+                    </article>
+
+                    <hr>
+
+                    <article id="LINKEDLIST">
+                        <header>
+                            <h1>6. Linked List</h1>
+                        </header>
+                        <p>
+                            <b>A) Singly linked list</b><br>
+                            Write Linked List program which pushes values to back and front. Class interface should have
+                            functions push_back, push_front and print_list.
+                            <br>
+                            <br>
+                        </p>
+                        <p>
+                            <b>Input:</b> 
+<pre><code>LinkedList lList;
+for (uint64_t i : {5, 6, 7, 8, 9, 10})
+{
+    lList.push_back(i);
+}
+lList.push_front(99);
+lList.push_front(98);</code></pre>
+</code></pre>
+                            <br>
+                            <b>Output:</b>
+<pre><code>lList.print_list();
+98 -&gt; 99 -&gt; 5 -&gt; 6 -&gt; 7-&gt; 8 -&gt; 9 -&gt; 10</code></pre>
+
+                        </p>
+                        <p>
+                            <b>B) Circular double linked list</b><br>
+                            Write Linked List program which pushes values to back and front. Class interface should have
+                            functions push_back, push_front and print_list.
+                            <br>
+                            <br>
+                        </p>
+                        <p>
+                            <b>Input:</b> 
+<pre><code>LinkedList lList;
+for (uint64_t i : {5, 6, 7, 8, 9, 10})
+{
+    lList.push_back(i);
+}
+lList.push_front(99);
+lList.push_front(98);</code></pre>
+</code></pre>
+                            <br>
+                            <b>Output:</b>
+<pre><code>lList.print_list();
+98 -&gt; 99 -&gt; 5 -&gt; 6 -&gt; 7-&gt; 8 -&gt; 9 -&gt; 10</code></pre>
+
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionLinkedList.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="VALUETOHEX">
+                        <header>
+                            <h1>7. Value to hex</h1>
+                        </header>
+                        <p>
+                            Write a program which changes value to hex string. Try not to use std-library.
+                            <br>
+                            <br>
+                        </p>
+                        <p>
+                            <b>Input:</b> 1611
+                            <br>
+                            <b>Output:</b> 0x64B
+                            <br>
+                            <br>
+                            <b>Input:</b> 11259375
+                            <br>
+                            <b>Output:</b> 0xABCDEF
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionValueToHex.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="SWAPPER">
+                        <header>
+                            <h1>8. Text Swapper</h1>
+                        </header>
+                        <p>
+                            Write a program which flips text other way around.
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                            <b>Input:</b> Love
+                            <br>
+                            <b>Output:</b> oveL
+                            <br>
+                            <br>
+                            <b>Input:</b> The best is yet to come
+                            <br>
+                            <b>Output:</b> emoc ot tey si tseb ehT
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionSwapper.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="SORTANDUNIQUE">
+                        <header>
+                            <h1>9. Sort and Unique</h1>
+                        </header>
+                        <p>
+                            Write a program which sorts and unique given array of numbers.
+                            Make two solutions: First test could use C++ -algorithms and second test could use plain
+                            C-language.
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                            <b>Input:</b> C++ algorithm solution: {2, 1, 7, 3, 4, 4, 1, 4, 9, 7} 
+                            <br>
+                            <b>Output:</b> {1, 2, 3, 4, 7, 9}
+                            <br>
+                            <br>
+                            <b>Input:</b> Plain C solution {2, 1, 7, 3, 4, 4, 1, 4, 9, 7} 
+                            <br>
+                            <b>Output:</b> {1, 2, 3, 4, 7, 9}
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionSortAndUnique.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="DIVISIBLENUMBER">
+                        <header>
+                            <h1>10. Find smallest positive divisible number</h1>
+                        </header>
+                        <p>
+                            Write a program which finds smallest positive number that is evenly divisible by the given
+                            numbers. Start numbers is one and test can feed different max numbers and program finds
+                            the smallest positive number which is divisible by all numbers from start to max.
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                            <b>Input:</b> 3
+                            <br>
+                            <b>Output:</b> 6
+                            <br>
+                            <br>
+                            <b>Input:</b> 10
+                            <br>
+                            <b>Output:</b> 2520
+                            <br>
+                            <br>
+                            <b>Input:</b> 20
+                            <br>
+                            <b>Output:</b> 232792560
+                            <br>
+                            <br>
+                            <b>Input:</b> 30
+                            <br>
+                            <b>Output:</b> 2329089562800
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionDivisible.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="CALCULATEPOINTS">
+                        <header>
+                            <h1>11. Calculate Points</h1>
+                        </header>
+                        <p>
+                            Write a program which calculates how many points are inside rectangle. 
+                            There are always same 5x5 grid given and rectangles are recessed to the grid. 
+                            If point touches the line, it is inside rectangle.
+                        </p>
+                        <img src="pictures/PointsGrid.bmp" alt="Points first" width="400" height="400"> <br>
+
+                        <br>
+                        <br>
+                        <p>
+                            <b>Input:</b> std::vector&lt;Point&gt; rec{{0.5f, 0.5f}, {3.5f, 0.5f}, {3.5f, 3.5f}, {0.5f, 3.5f}};<br> 
+                            <img src="pictures/PointsFirst.bmp" alt="Points first" width="400" height="400"> <br>
+                            <b>Output:</b> Points inside rectangle are 9
+                            <br>
+                            <br>
+                            <b>Input:</b> std::vector&lt;Point&gt; rec{{1.5f, 0.5f}, {3.5f, 0.5f}, {3.5f, 3.5f}, {1.5f, 3.5f}};<br> 
+                            <img src="pictures/PointsSecond.bmp" alt="Points first" width="400" height="400"> <br>
+                            <b>Output:</b> Points inside rectangle are 6
+                            <br>
+                            <br>
+                            <b>Input:</b> std::vector&lt;Point&gt; rec{{2.0f, -1.0f}, {6.0f, 3.0f}, {4.0f, 5.0f}, {0.0f, 1.0f}};<br> 
+                            <img src="pictures/PointsThird.bmp" alt="Points first" width="500" height="400"> <br>
+                            <b>Output:</b> Points inside rectangle are 17
+                            <br>
+                            <br>
+                            <b>Input:</b> std::vector&lt;Point&gt; rec{{3.0f, 1.5f}, {3.5f, 2.0f}, {2.0f, 3.5f}, {1.5f, 3.0f}};<br> 
+                            <img src="pictures/PointsFourth.bmp" alt="Points first" width="400" height="400"> <br>
+                            <b>Output:</b> Points inside rectangle are 2
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionCalculatePoints.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="CHESS">
+                        <header>
+                            <h1>12. Chess</h1>
+                        </header>
+                        <p>
+                            There is a chessboard and only two pieces are used: Queen and Knight. Input parameter is the size of the chessboard. Write a program which calculates how many positions there are on the chessboard where knight and queen are not threaten each other.
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                            <b>Input:</b> Board3x3<br>
+                            <b>Output:</b> 0
+                            <br>
+                            <br>
+                            <b>Input:</b> Board4x4<br>
+                            <b>Output:</b> 40 
+                            <br>
+                            <br>
+                            <b>Input:</b> Board5x5<br>
+                            <b>Output:</b> 184 
+                            <br>
+                            <br>
+                            <b>Input:</b> Board100x100<br>
+                            <b>Output:</b> 96618984
+                            <br>
+                            <br>
+                            <b>Input:</b> Board200x200<br>
+                            <b>Output:</b> 1573137984 
+                            <br>
+                            <br>
+                            <b>Input:</b> Board500x500<br>
+                            <b>Output:</b> 62082094984 
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionChess.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="CRC">
+                        <header>
+                            <h1>13. CRC</h1>
+                        </header>
+                        <p>
+                            Write CRC calculation program for CRC8, CRC16, CRC32.
+
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                            <b>Input:</b> CRC8 0b11000010 Polynomial: 0x1D<br>
+                            <b>Output:</b> 0x0F
+                            <br>
+                            <br>
+                            <b>Input:</b> CRC8 {0x12, 0x34} Polynomial: 0x07<br>
+                            <b>Output:</b> 0xF1
+                            <br>
+                            <br>
+                            <b>Input:</b> CRC8 {0x12, 0x34, 0x56, 0x78, 0x9} Polynomial: 0x07<br>
+                            <b>Output:</b> 0x6B
+                            <br>
+                            <br>
+                            <b>Input:</b> CRC16 {0x1, 0x2} Polynomial: 0x1021<br>
+                            <b>Output:</b> 0x1373
+                            <br>
+                            <br>
+                            <b>Input:</b> CRC16 {0x12, 0x34, 0x56, 0x78, 0x9} Polynomial: 0x0589<br>
+                            <b>Output:</b> 0xB82A
+                            <br>
+                            <br>
+                            <b>Input:</b> CRC32 {0x12, 0x34, 0x56, 0x78, 0x9} Polynomial: 0x04C11DB7<br>
+                            <b>Output:</b> 0xC68796C7
+                            <br>
+                            <br>
+                            <b>Input:</b> CRC32 {0x12, 0x34, 0x56, 0x78, 0x9} Polynomial: 0x814141AB<br>
+                            <b>Output:</b> 0xE5997626
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionCrc.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="MULTIPLICATION">
+                        <header>
+                            <h1>14. Multiplication</h1>
+                        </header>
+                        <p>Create simple multiplication game, which can be used to learn multiplication table.<br>
+                        Program takes one (number) parameter and asks all multiplications in random order.
+                            
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                        Posible input and ouput: <br>
+                        <b>Input:</b> ./multi 2<br>
+                        <b>Output:</b><pre><code>
+How much is 2 * 5 = 10
+Right
+How much is 2 * 7 = 14
+Right
+How much is 2 * 4 = 8
+Right
+How much is 2 * 8 = 16
+Right
+How much is 2 * 2 = 4
+Right
+How much is 2 * 10 = 20
+Right
+How much is 2 * 6 = 12
+Right
+How much is 2 * 3 = 6
+Right
+How much is 2 * 1 = 2
+Right
+How much is 2 * 9 = 18
+Right
+Well done!</code></pre>
+                        </p>
+                        <p class="solutions">
+                            See solution in
+                            <a href="solutionMulti.html">C++</a>
+                            or
+                            <a href="solutionMultiPython.html">Python</a>
+                        </p>
+                    </article>
+
+                    <a href="#top">Back to top</a>
+                </aside>    
+                <!-- </div> -->
+            </div>
+        </div>
+
+        <footer>
+            <p>
+               <b><em>eero.viittala@outlook.com</em></b> 
+            </p>
+        </footer>
+    </body>
+</html>

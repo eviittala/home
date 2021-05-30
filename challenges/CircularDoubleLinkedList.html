@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Linked List</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#pragma once
+
+template &lt;typename T&gt; class CircularDLl {
+  public:
+    CircularDLl() = default;
+    CircularDLl(const CircularDLl &) = delete;
+    CircularDLl(const CircularDLl &&) = delete;
+
+    CircularDLl &operator=(const CircularDLl &) = delete;
+    CircularDLl &operator=(const CircularDLl &&) = delete;
+
+    void push_back(const T arg) {
+        Node *n = new Node{.data = arg, .next = nullptr, .prev = nullptr};
+        addNodeBack(n);
+    }
+
+    void push_front(const T arg) {
+        Node *n = new Node{.data = arg, .next = nullptr, .prev = nullptr};
+        addNodeFront(n);
+    }
+
+    void print_list() {
+        if (head) {
+            Node *n = head;
+            Node *t = head-&gt;prev;
+            std::cout &lt;&lt; "Print list:" &lt;&lt; std::endl;
+            while (n != t) {
+                std::cout &lt;&lt; n-&gt;data &lt;&lt; " -&gt; ";
+                n = n-&gt;next;
+            }
+            std::cout &lt;&lt; t-&gt;data &lt;&lt; std::endl;
+        }
+    }
+
+    ~CircularDLl() {
+        if (head) {
+            Node *tail = head-&gt;prev;
+            while (head != tail) {
+                Node *del = head;
+                head = head-&gt;next;
+                delete del;
+                del = nullptr;
+            }
+            delete tail;
+            tail = nullptr;
+        }
+    }
+
+  private:
+    struct Node {
+        T data;
+        Node *next;
+        Node *prev;
+    };
+
+    Node *head = nullptr;
+
+    void addHead(Node *const n) {
+        head = n;
+        head-&gt;next = head;
+        head-&gt;prev = head;
+    }
+
+    void addNodeBack(Node *const n) {
+        std::cout &lt;&lt; "Adding node: " &lt;&lt; n-&gt;data &lt;&lt; std::endl;
+        if (!head) {
+            addHead(n);
+        } else {
+            Node *tail = head-&gt;prev;
+            n-&gt;next = head;
+            n-&gt;prev = tail;
+            tail-&gt;next = n;
+            head-&gt;prev = n;
+        }
+        std::cout &lt;&lt; "Head node: " &lt;&lt; head-&gt;data &lt;&lt; std::endl;
+    }
+
+    void addNodeFront(Node *const n) {
+        if (!head) {
+            addHead(n);
+        } else {
+            n-&gt;next = head;
+            n-&gt;prev = head-&gt;prev;
+            head = n;
+        }
+    }
+};
+        </code>
+    </pre>
+</body>
+</html>

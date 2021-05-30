@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution multiplication</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+import sys
+import random
+
+vals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+def ask(args):
+    random.seed()
+    while len(vals) &gt; 0:
+        rand = random.randrange(0, len(vals))
+        inVal = input("{0} * {1} = ".format(args[1], vals[rand]))
+        answer = int(args[1]) * vals.pop(rand)
+
+        if int(inVal) == int(answer):
+            print("Right")
+        else:
+            print("Wrong, correct answer is {0}". format(answer))
+            sys.exit("You'll need to practice more")
+
+    print("Well done")        
+
+
+if __name__ == "__main__":
+    if len(sys.argv) &gt; 2:
+        sys.exit("Too many args have been given")
+    ask(sys.argv);
+        </code>
+    </pre>
+</body>
+</html>

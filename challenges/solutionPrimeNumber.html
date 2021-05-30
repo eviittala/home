@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Prime Number</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;bitset&gt;
+#include &lt;map&gt;
+
+namespace
+{
+class PrimeNumber : public testing::Test
+{
+    public:
+        void SetUp() override
+        {
+            primeNumber = 2;
+        }
+
+        uint64_t getLargestPrimeFactor(uint64_t val)
+        {
+            while (getPrimeNumber() &lt;= (val / getPrimeNumber()))
+            {
+                if (val % getPrimeNumber() == 0)
+                {
+                    primeNumbers.push_back(getPrimeNumber());
+                    val /= getPrimeNumber();
+                }
+                setNextPrimeNumber();
+            }
+            if (isPrime(val))
+            {
+                primeNumbers.push_back(val);
+            }
+            return primeNumbers.back();
+        }
+
+        void printPrimeNumbers()
+        {
+            for (auto it = std::begin(primeNumbers); it != std::end(primeNumbers); ++it)
+            {
+                if (std::distance(it, std::begin(primeNumbers)) == 0)
+                {
+                    std::cout&lt;&lt;"{";
+                }
+                std::cout&lt;&lt;*it;
+                if (std::distance(it, std::end(primeNumbers)) &gt; 1)
+                {
+                    std::cout&lt;&lt;", ";
+                }
+            }
+            std::cout&lt;&lt;"}"&lt;&lt;std::endl;
+        }
+
+    private:
+        uint64_t getPrimeNumber() const noexcept
+        {
+            return primeNumber;
+        }
+
+        void setNextPrimeNumber()
+        {
+            while (++primeNumber)
+            {
+                if (isPrime(primeNumber))
+                {
+                    break;
+                }
+            }
+        }
+
+        bool isPrime(const uint64_t val) const noexcept
+        {
+            for (uint64_t i{2}; i &lt; val; ++i)
+            {
+                if (val % i == 0)
+                {
+                    return false;
+                }
+            }
+
+            return val &gt; 0 ? true : false;
+        }
+        uint64_t primeNumber;
+        std::vector&lt;uint64_t&gt; primeNumbers;
+};
+
+TEST_F(PrimeNumber, first)
+{
+    EXPECT_EQ(5, getLargestPrimeFactor(200));
+    printPrimeNumbers();
+}
+
+TEST_F(PrimeNumber, second)
+{
+    EXPECT_EQ(11, getLargestPrimeFactor(330));
+    printPrimeNumbers();
+}
+
+TEST_F(PrimeNumber, third)
+{
+    EXPECT_EQ(547, getLargestPrimeFactor(12034));
+    printPrimeNumbers();
+}
+
+TEST_F(PrimeNumber, fourth)
+{
+    EXPECT_EQ(1114117, getLargestPrimeFactor(243423423330));
+    printPrimeNumbers();
+}
+
+TEST_F(PrimeNumber, fifth)
+{
+    EXPECT_EQ(6691397, getLargestPrimeFactor(334546577321234));
+    printPrimeNumbers();
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

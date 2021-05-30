@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Sort And Unique</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;algorithm&gt;
+
+namespace
+{
+TEST(SortAndUnique, CplusplusAlgorithm)
+{
+    std::vector&lt;uint64_t&gt; vec{2, 1, 7, 3, 4, 4, 1, 4, 9, 7};
+    std::sort(std::begin(vec), std::end(vec));
+    auto it = std::unique(std::begin(vec), std::end(vec));
+    vec.resize(std::distance(std::begin(vec), it));
+    const std::vector&lt;uint64_t&gt; expectedVec{1, 2, 3, 4, 7, 9};
+    EXPECT_TRUE(std::equal(std::begin(expectedVec), std::end(expectedVec), std::begin(vec)));
+}
+
+void mySort(uint64_t* first, uint64_t* end)
+{
+    bool run = true;
+    while (run)
+    {
+        run = false;
+        for (uint64_t i{1}; i &lt; (end - first); ++i)
+        {
+            if (first[i] &lt; first[i - 1])
+            {
+                std::swap(first[i], first[i - 1]);
+                run = true;
+            }
+        }
+    }
+}
+
+uint64_t* myUnique(uint64_t* first, uint64_t* end)
+{
+    uint64_t* next = first;
+    while (++first != end)
+    {
+        if (*next &lt; *first)
+        {
+            if ((next + 1) != first)
+                std::swap(*++next, *first);
+            else
+                ++next;
+        }
+    }
+    return next + 1;
+}
+
+TEST(SortAndUnique, CStyle)
+{
+    uint64_t arr[] = {2, 1, 7, 3, 4, 4, 1, 4, 9, 7};
+    mySort(arr, arr + sizeof(arr)/sizeof(uint64_t));
+    uint64_t* it = myUnique(arr, arr + sizeof(arr)/sizeof(uint64_t));
+    const uint64_t expectedArr[] = {1, 2, 3, 4, 7, 9};
+    EXPECT_TRUE(std::equal(std::begin(expectedArr), std::end(expectedArr), std::begin(arr)));
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

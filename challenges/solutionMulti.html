@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution multiplication</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;algorithm&gt;
+#include &lt;ctime&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+void askTableAndPrintResult(const uint32_t val) {
+    std::vector&lt;uint32_t&gt; numbers(10);
+    std::generate(std::begin(numbers), std::end(numbers),
+                  [i = 0]() mutable { return ++i; });
+    std::srand(std::time(nullptr));
+
+    while (not numbers.empty()) {
+        const int ran = std::rand() % numbers.size();
+        int answer = 0;
+        std::cout &lt;&lt; "How much is " &lt;&lt; val &lt;&lt; " * " &lt;&lt; numbers.at(ran) &lt;&lt; " = ";
+        std::cin &gt;&gt; answer;
+        if (answer == val * numbers.at(ran)) {
+            std::cout &lt;&lt; "Right" &lt;&lt; std::endl;
+            numbers.erase(std::begin(numbers) + ran);
+        } else {
+            std::cout &lt;&lt; "Wrong, correct answer is: " &lt;&lt; val * numbers.at(ran)
+                      &lt;&lt; std::endl;
+            break;
+        }
+    }
+    if (numbers.empty()) {
+        std::cout &lt;&lt; "Well done!" &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; "You'll need to practice more" &lt;&lt; std::endl;
+    }
+}
+
+int main(int args, char *argv[]) {
+    if (args != 2) {
+        std::cout &lt;&lt; "One number is needed" &lt;&lt; std::endl;
+    }
+    askTableAndPrintResult(std::atoi(argv[1]));
+    return 0;
+}
+        </code>
+    </pre>
+</body>
+</html>

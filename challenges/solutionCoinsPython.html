@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Coins Python</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+import unittest
+
+result = 0
+
+def solution(coins, base, i):
+    global result
+    n = 0
+    if i &lt; (len(coins) - 1):
+        while (base + coins[i] * n) &lt;= 200:
+            base = base + coins[i] * n
+            solution(coins, base, i + 1)
+            base = base - coins[i] * n
+            n = n + 1
+    else:
+        while (base + coins[i] * n) &lt;= 200:
+            base = base + coins[i] * n
+            if base == 200:
+                result = result + 1
+            base = base - coins[i] * n
+            n = n + 1
+
+class TestCoinsFunction(unittest.TestCase):
+
+    def setUp(self):
+        self.coins = [1, 2, 5, 10, 20, 50, 100, 200]
+
+    def test_coins(self):
+        solution(self.coins, 0, 0)
+        self.assertEqual(result, 73682)
+
+unittest.main()
+        </code>
+    </pre>
+</body>
+</html>

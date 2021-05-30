@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Coins C++</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;iostream&gt;
+
+namespace
+{
+constexpr uint64_t twoEuros{200};
+uint64_t result{0};
+
+template &lt;typename T&gt;
+void solution(uint64_t base, T arg)
+{
+    for (uint64_t i{0}; (i * arg) &lt;= twoEuros && base &lt;= twoEuros; ++i)
+    {
+        if ((base + i * arg) == twoEuros)
+        {
+            ++result;
+        }
+    }
+}
+
+template &lt;typename T, typename... Args&gt;
+void solution(uint64_t base, T arg, Args... args)
+{
+    for (uint64_t i{0}; (i * arg) &lt;= twoEuros && base &lt;= twoEuros; ++i)
+    {
+        base += i * arg;
+        solution(base, args...);
+        base -= i * arg;
+    }
+}
+
+TEST(Coins, first)
+{
+    uint64_t base{0};
+    solution(base, 1, 2, 5, 10, 20, 50, 100, 200);
+    std::cout&lt;&lt;"Output: "&lt;&lt;result&lt;&lt;std::endl;
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

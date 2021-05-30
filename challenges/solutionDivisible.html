@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Smallest Divisible</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;algorithm&gt;
+
+namespace
+{
+uint64_t solution(const uint64_t maxDiv)
+{
+    uint64_t retVal{1};
+    uint64_t base{1};
+    for (uint64_t i{1}; i &lt;= maxDiv; ++i)
+    {
+        while (retVal % i != 0)
+        {
+            retVal += base;
+        }
+        base = retVal;
+    }
+    return retVal;
+}
+
+TEST(SmallestDivisible, first)
+{
+    EXPECT_EQ(6, solution(3));
+}
+
+TEST(SmallestDivisible, second)
+{
+    EXPECT_EQ(2520, solution(10));
+}
+
+TEST(SmallestDivisible, third)
+{
+    EXPECT_EQ(232792560, solution(20));
+}
+
+TEST(SmallestDivisible, fourth)
+{
+    EXPECT_EQ(2329089562800, solution(30));
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

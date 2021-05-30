@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Chess</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;cmath&gt;
+#include &lt;vector&gt;
+
+namespace
+{
+int maxX{0};
+int maxY{0};
+
+class Point
+{
+public:
+    constexpr Point(const int argX, const int argY) : x{argX}, y{argY} {}
+
+    Point& operator++()
+    {
+        if (++x == maxX)
+        {
+            x = 1;
+            if (++y == maxY)
+            {
+                y = 1;
+            }
+        }
+        return *this;
+    }
+
+    bool operator==(const Point& arg)
+    {
+        return x == arg.x && y == arg.y;
+    }
+
+    bool operator==(const Point& arg) const
+    {
+        return x == arg.x && y == arg.y;
+    }
+
+    bool operator!=(const Point& arg)
+    {
+        return !(*this == arg);
+    }
+
+    bool isValid() const
+    {
+        return x &gt; 0 && x &lt; maxX && y &gt; 0 && y &lt; maxY;
+    }
+
+    void printPoint(const std::string txt) const noexcept
+    {
+        std::cout&lt;&lt;txt&lt;&lt;" ("&lt;&lt;x&lt;&lt;", "&lt;&lt;y&lt;&lt;")"&lt;&lt;std::endl;
+    }
+
+    constexpr int getX() const noexcept { return x; }
+    constexpr int getY() const noexcept { return y; }
+private:
+    int x, y;
+};
+
+constexpr std::array&lt;Point, 8&gt; knightPoints{Point{-1, 2}, Point{1, 2}, Point{-1, -2}, Point{1, -2}, Point{2, -1}, Point{-2, -1}, Point{2, 1}, Point{-2, 1}};
+
+inline Point operator+(const Point& arg1, const Point& arg2)
+{
+    Point retPoint{arg1.getX() + arg2.getX(), arg1.getY() + arg2.getY()};
+    return retPoint;
+}
+
+void moveKnightAndQueen(Point& knight, Point& queen)
+{
+    ++knight;
+    if (knight.getX() == 1 && knight.getY() == 1)
+    {
+        ++queen;
+    }
+}
+
+void moveKnightToNextLineAndQueen(Point& knight, Point& queen)
+{
+    Point temp{1, knight.getY() + 1 &lt; maxY ? knight.getY() + 1 : 1};
+    knight = temp;
+    if (knight.getX() == 1 && knight.getY() == 1)
+    {
+        ++queen;
+    }
+}
+
+inline bool isQueenThreatening(const Point& queen, const Point& knight)
+{
+    if (queen.getX() == knight.getX() || queen.getY() == knight.getY())
+    {
+        return true;
+    }
+
+    if (queen.getX() &lt; knight.getX())
+    {
+        const int advanceVal = knight.getX() - queen.getX();
+        if (queen.getY() &lt; knight.getY())
+        {
+            Point temp{queen.getX() + advanceVal, queen.getY() + advanceVal};
+            if (temp == knight)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            Point temp{queen.getX() + advanceVal, queen.getY() - advanceVal};
+            if (temp == knight)
+            {
+                return true;
+            }
+        }
+    }
+    else
+    {
+        const int advanceVal = queen.getX() - knight.getX();
+        if (queen.getY() &lt; knight.getY())
+        {
+            Point temp{queen.getX() - advanceVal, queen.getY() + advanceVal};
+            if (temp == knight)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            Point temp{queen.getX() - advanceVal, queen.getY() - advanceVal};
+            if (temp == knight)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+inline bool isKnightThreatening(const Point& queen, const Point& knight)
+{
+    if (3 &gt; std::abs(queen.getX() - knight.getX()))
+    {
+        for (const Point& points : knightPoints)
+        {
+            const Point temp = knight + points;
+            if (temp.isValid() && temp == queen)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool doNotThreatenEachOther(const Point& queen, const Point& knight)
+{
+    if (isQueenThreatening(queen, knight) || isKnightThreatening(queen, knight))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void doKnightQueenCalculation(const Point& knight, const Point& queen, uint64_t& nbrOfNoThreats)
+{
+    const int diff = std::abs(queen.getY() - knight.getY());
+    if (queen.getX() &gt; 1 && maxX - queen.getX() &gt; 1)
+    {
+        int val = maxX - 1;
+        if (queen.getY() &lt; knight.getY())
+        {
+            Point temp{queen.getX() + diff, queen.getY() + diff};
+            if (temp.isValid())
+            {
+                val -= 1;
+            }
+            Point temp2{queen.getX() - diff, queen.getY() + diff};
+            if (temp2.isValid())
+            {
+                val -= 1;
+            }
+        }
+        else
+        {
+            Point temp3{queen.getX() + diff, queen.getY() - diff};
+            if (temp3.isValid())
+            {
+                val -= 1;
+            }
+            Point temp4{queen.getX() - diff, queen.getY() - diff};
+            if (temp4.isValid())
+            {
+                val -= 1;
+            }
+        }
+        nbrOfNoThreats += val - 1;
+    }
+    else
+    {
+        nbrOfNoThreats += maxX - 2 - 1;
+    }
+}
+
+uint64_t solution(const int gridX, const int gridY)
+{
+    uint64_t nbrOfNoThreats{0};
+    maxX = gridX + 1;
+    maxY = gridY + 1;
+    Point queen{1, 1};
+    Point knight{2, 1};
+    do
+    {
+        if (std::abs(queen.getY() - knight.getY()) &gt; 2)
+        {
+            doKnightQueenCalculation(knight, queen, nbrOfNoThreats);
+            moveKnightToNextLineAndQueen(knight, queen);
+        }
+        else
+        {
+            if (queen != knight)
+            {
+                if (doNotThreatenEachOther(queen, knight))
+                {
+                    ++nbrOfNoThreats;
+                }
+            }
+            moveKnightAndQueen(knight, queen);
+        }
+    } while (queen.getX() != 1 || queen.getY() != 1 || knight.getX() != 1 || knight.getY() != 1);
+    return nbrOfNoThreats;
+}
+
+TEST(Chess, Board3x3)
+{
+    EXPECT_EQ(0, solution(3, 3));
+}
+
+TEST(Chess, Board4x4)
+{
+    EXPECT_EQ(40, solution(4, 4));
+}
+
+TEST(Chess, Board5x5)
+{
+    EXPECT_EQ(184, solution(5, 5));
+}
+
+TEST(Chess, Board100x100)
+{
+    EXPECT_EQ(96618984, solution(100, 100));
+}
+
+TEST(Chess, Board200x200)
+{
+    EXPECT_EQ(1573137984, solution(200, 200));
+}
+
+TEST(Chess, Board500x500)
+{
+    EXPECT_EQ(62082094984, solution(500, 500));
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Lcd Calculator</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;bitset&gt;
+#include &lt;map&gt;
+
+namespace
+{
+const std::map&lt;char, std::array&lt;std::bitset&lt;3&gt;, 3&gt;&gt; patternMap {{'0', {0b010, 0b101, 0b111}},
+                                                                {'1', {0b000, 0b100, 0b100}},
+                                                                {'2', {0b010, 0b110, 0b011}},
+                                                                {'3', {0b010, 0b110, 0b110}},
+                                                                {'4', {0b000, 0b111, 0b100}},
+                                                                {'5', {0b010, 0b011, 0b110}},
+                                                                {'6', {0b010, 0b011, 0b111}},
+                                                                {'7', {0b010, 0b100, 0b100}},
+                                                                {'8', {0b010, 0b111, 0b111}},
+                                                                {'9', {0b010, 0b111, 0b110}},
+                                                                {'-', {0b000, 0b010, 0b000}},
+                                                                {'+', {0b000, 0b110, 0b000}},
+                                                                {'=', {0b000, 0b010, 0b010}},
+                                                                {' ', {0b000, 0b000, 0b000}}};
+
+void paintPattern(const std::bitset&lt;3&gt; bits)
+{
+    if (bits.test(0))
+    {
+        std::cout&lt;&lt;"|";
+    }
+    else
+    {
+        std::cout&lt;&lt;" ";
+    }
+
+    if (bits.test(1))
+    {
+        std::cout&lt;&lt;"_";
+    }
+    else
+    {
+        std::cout&lt;&lt;" ";
+    }
+
+    if (bits.test(2))
+    {
+        std::cout&lt;&lt;"|";
+    }
+    else
+    {
+        std::cout&lt;&lt;" ";
+    }
+}
+
+int64_t getValueFromString(const std::string& str, uint64_t& pos)
+{
+    int64_t retVal{0};
+    bool isNegative = false;
+    while (str[pos] == ' ') ++pos;
+    if (str[pos] == '-')
+    {
+        ++pos;
+        isNegative = true;
+    }
+    for (; str[pos] &gt;= '0' && str[pos] &lt;= '9'; ++pos)
+    {
+        retVal *= 10;
+        char val[2];
+        val[0] = str[pos];
+        val[1] = '\0';
+        retVal += std::atoi(val);
+    }
+    return isNegative ? -retVal : retVal;
+}
+
+void calculateSum(std::string& str)
+{
+    uint64_t pos{0};
+    int64_t sum{getValueFromString(str, pos)};
+    int64_t tempSum{0};
+    for (; pos &lt; str.size(); )
+    {
+        if (str[pos] == '+')
+        {
+            sum += getValueFromString(str, ++pos);
+        }
+        else if (str[pos] == '-')
+        {
+            sum -= getValueFromString(str, ++pos);
+        }
+        else
+            ++pos;
+    }
+    str += " = ";
+    str += std::to_string(sum);
+}
+
+void printLcd(std::string str)
+{
+    calculateSum(str);
+    for (uint64_t i{0}; i &lt; 3; ++i)
+    {
+        for (const auto& c : str)
+        {
+            paintPattern(patternMap.at(c).at(i));
+        }
+        std::cout&lt;&lt;std::endl;
+    }
+}
+
+TEST(LcdCalc, first)
+{
+    printLcd("34 + 94 - 4");
+}
+
+TEST(LcdCalc, second)
+{
+    printLcd("4 - 94 + 5");
+}
+
+TEST(LcdCalc, third)
+{
+    printLcd("-8 + 44 + 5");
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

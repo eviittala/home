@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Linked List</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#pragma once
+
+template &lt;typename T&gt; class SinglyLl {
+  public:
+    SinglyLl() = default;
+    SinglyLl(const SinglyLl &) = delete;
+    SinglyLl(const SinglyLl &&) = delete;
+
+    SinglyLl &operator=(const SinglyLl &) = delete;
+    SinglyLl &operator=(const SinglyLl &&) = delete;
+
+    ~SinglyLl() {
+        Node *n = head;
+        while (n) {
+            Node *del = n;
+            n = n-&gt;next;
+            delete del;
+            del = nullptr;
+        }
+        head = nullptr;
+    }
+
+    void push_back(const T arg) {
+        Node *n = new Node{.data = arg, .next = nullptr};
+        addNodeBack(n);
+    }
+
+    void push_front(const T arg) {
+        Node *n = new Node{.data = arg, .next = nullptr};
+        addNodeFront(n);
+    }
+
+    void print_list() {
+        Node *n = head;
+        std::cout &lt;&lt; "\nPrinting list:\n";
+
+        while (n) {
+            std::cout &lt;&lt; n-&gt;data;
+            n = n-&gt;next;
+            if (n) {
+                std::cout &lt;&lt; " -&gt; ";
+            }
+        }
+        std::cout &lt;&lt; std::endl;
+    }
+
+  private:
+    struct Node {
+        T data;
+        Node *next;
+    };
+
+    Node *head = nullptr;
+
+    void addNodeBack(Node *const node) {
+        if (!head) {
+            head = node;
+        } else {
+            Node *n = head;
+            while (n-&gt;next) {
+                n = n-&gt;next;
+            }
+            n-&gt;next = node;
+        }
+    }
+
+    void addNodeFront(Node *const node) {
+        if (!head) {
+            head = node;
+        } else {
+            node-&gt;next = head;
+            head = node;
+        }
+    }
+};
+        </code>
+    </pre>
+</body>
+</html>

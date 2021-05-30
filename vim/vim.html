@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Eero Viittala Homepage</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+    </head>
+
+    <body>
+        <header class="top">
+            <h1 id="top">Eero Viittala homepage</h1>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="../index.html">HOME</a></li>
+                <li><a href="../challenges/challenges.html">CHALLENGES</a></li>
+                <li class="selected"><a href="../vim/vim.html">VIM</a></li>
+                <li><a href="../games/games.html">GAMES</a></li>
+            </ul>
+        </nav>
+
+        <div id="tableContainer">
+            <div id="tableRow">
+                <div id="sidebar">
+                    <nav>
+                        <ol>
+                            <li><a href="#WHITESPACE">1. Delete whitespace</a></li>
+                            <li><a href="#SWITCHSOURCE">2. Switch Source</a></li>
+                            <li><a href="#WINNR">3. Current window number</a></li>
+                            <li><a href="#SORTINCLUDES">4. Sort includes</a></li>
+                            <li><a href="#NUMBERTOHEX">5. Number to hex</a></li>
+                            <li><a href="#MYVIMRC">My vimrc</a></li>
+                        </ol>
+                    </nav>
+                </div>
+               <!-- <div id="main"> -->
+                <aside>
+                    <article id="WHITESPACE">
+                        <header>
+                            <h1>1, Delete whitespace at end of line</h1>
+                        </header>
+                        <p>
+                            <pre><code>
+:%s/\s\+$//e
+                            </code></pre>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="SWITCHSOURCE">
+                        <header>
+                            <h1>2. Switch source file</h1>
+                        </header>
+                        <p>
+                            <pre><code>
+function! SwitchSourceHeader()
+  "update!
+  if (expand ("%:e") =~ 'c\(c\|p\)\?p\?')
+      try
+          find %:t:r.hpp
+      catch /.*/    
+          find %:t:r.h
+      endtry    
+  else
+      try
+          find %:t:r.cpp
+      catch /.*/
+          find %:t:r.c
+      endtry
+  endif
+endfunction
+                            </code></pre>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="WINNR">
+                        <header>
+                            <h1>3. Current window number</h1>
+                        </header>
+                        <p>
+                            <pre><code>
+:echo winnr()
+                            </code></pre>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="SORTINCLUDES">
+                        <header>
+                            <h1>4. Sort includes</h1>
+                        </header>
+                        <p>
+                            <pre><code>
+function! SortIncludes()
+    let currentPos = getcurpos()
+    let cmd = 'g/#include/.,/^\(\(#include\)\@!.\)*$/-1sort'
+    call execute(cmd)
+    call setpos('.', currentPos)
+endfunction    
+                            </code></pre>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="NUMBERTOHEX">
+                        <header>
+                            <h1>5. Number to hex</h1>
+                        </header>
+                        <p>
+                            <pre><code>
+function! NumberToHex()
+    function! Validate(val) abort
+        if a:val[0] == 0 &amp;&amp; a:val[1] =~ '\(x\|X\)'
+            echoerr "Number is already hex!"
+            return
+        endif
+    endfunction
+    let number = expand("&lt;cword&gt;")
+    call Validate(number)
+    let cmd = ':s/\&lt;' . expand("&lt;cword&gt;") . '\&gt;/\=printf("0x%016x", submatch(0))/'
+    execute cmd
+endfunction
+                            </code></pre>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="MYVIMRC">
+                        <header>
+                            <h1>My vimrc</h1>
+                        </header>
+                        <p>
+                            <pre><code>
+set number                              " Set linenumbers
+set splitbelow                          " New window below
+set splitright                          " New window right
+set tabstop=4 shiftwidth=4 expandtab    " Tab to space
+set autoindent                          " Copy indent from current line when starting a new line
+set ruler                               " Show the line and column number of the cursor position
+set hlsearch                            " When there is a previous search pattern, highlight all its matches
+set incsearch                           " While typing a search command, the matched string is highlighted
+set wildmenu                            " On pressing '<Tab>' to invoke completion
+set belloff=all                         " Bell off for all events
+
+nmap ,w :echo winnr()<CR>
+nmap ,s :call SwitchSourceHeader()<CR>
+
+autocmd BufRead *.h,*.hpp,*.c,*.cpp set cindent
+autocmd BufWritePre *.h,*.hpp,*.c,*.cpp %s/\s\+$//e
+autocmd BufWritePre *.h,*.hpp,*.c,*.cpp call FormatOnSave()
+autocmd BufReadPost *
+    \ if line("'\"") &gt;= 1 &amp;&amp; line("'\"") &lt;= line("$") &amp;&amp; &amp;ft !~# 'commit'
+    \ |   exe "normal! g`\""
+    \ | endif
+
+
+function! SwitchSourceHeader()
+  "update!
+  if (expand ("%:e") =~ 'c\(c\|p\)\?p\?')
+      try
+          find %:t:r.hpp
+      catch /.*/    
+          find %:t:r.h
+      endtry    
+  else
+      try
+          find %:t:r.cpp
+      catch /.*/
+          find %:t:r.c
+      endtry
+  endif
+endfunction    
+
+function! FormatOnSave()
+    let l:lines="all"
+    if has('python')
+        pyf /usr/share/clang/clang-format-10/clang-format.py
+    elseif has('python3')
+        py3f /usr/share/clang/clang-format-10/clang-format.py
+    endif
+endfunction
+                            <code></pre>
+                        </p>
+                    </article>
+                    <hr>
+                    <a href="#top">Back to top</a>
+                </aside>    
+                <!-- </div> -->
+            </div>
+        </div>
+
+        <footer>
+            <p>
+               <b><em>eero.viittala@outlook.com</em></b> 
+            </p>
+        </footer>
+    </body>
+</html>
+

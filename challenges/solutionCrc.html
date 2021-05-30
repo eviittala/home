@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Calculate Points</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;algorithm&gt;
+#include &lt;bitset&gt;
+#include &lt;cmath&gt;
+#include &lt;vector&gt;
+
+namespace
+{
+uint8_t solutionCrc8(const std::vector&lt;uint8_t&gt; datas, const uint8_t poly)
+{
+    std::array&lt;std::bitset&lt;8&gt;, 0xff + 1&gt; crcArray;
+    std::bitset&lt;8&gt; crc;
+    std::for_each(std::begin(crcArray), std::end(crcArray), [i = 0, &poly] (auto& arg) mutable
+            {
+                arg = i++;
+                if (arg.test(7))
+                {
+                    arg &lt;&lt;= 1;
+                    arg ^= poly;
+                }
+                else
+                {
+                    arg &lt;&lt;= 1;
+                }
+            });
+    for (const uint8_t data : datas)
+    {
+        crc ^= data;
+        for (uint8_t i{0}; i &lt; 8; ++i)
+        {
+            crc = crcArray[crc.to_ulong()];
+        }
+    }
+    return crc.to_ulong();
+}
+
+uint16_t solutionCrc16(const std::vector&lt;uint8_t&gt; datas, const uint16_t poly)
+{
+    std::array&lt;std::bitset&lt;16&gt;, 0xffff + 1&gt; crcArray;
+    std::bitset&lt;16&gt; crc;
+    std::for_each(std::begin(crcArray), std::end(crcArray), [i = 0, &poly] (auto& arg) mutable
+            {
+                arg = i++;
+                if (arg.test(15))
+                {
+                    arg &lt;&lt;= 1;
+                    arg ^= poly;
+                }
+                else
+                {
+                    arg &lt;&lt;= 1;
+                }
+            });
+    for (const uint8_t data : datas)
+    {
+        crc ^= data &lt;&lt; 8;
+        for (uint8_t i{0}; i &lt; 8; ++i)
+        {
+            crc = crcArray[crc.to_ulong()];
+        }
+    }
+    return crc.to_ulong();
+}
+
+uint32_t solutionCrc32(const std::vector&lt;uint8_t&gt; datas, const uint32_t poly)
+{
+    std::bitset&lt;32&gt; crc{};
+    for (const uint8_t data : datas)
+    {
+        crc ^= (uint32_t)data &lt;&lt; 24;
+        for (uint8_t i{0}; i &lt; 8; ++i)
+        {
+            if (crc.test(31))
+            {
+                crc &lt;&lt;= 1;
+                crc ^= poly;
+            }
+            else
+            {
+                crc &lt;&lt;= 1;
+            }
+        }
+    }
+    return crc.to_ulong();
+}
+
+TEST(CRC8, First)
+{
+    EXPECT_EQ(0x0F, solutionCrc8({0b11000010}, 0x1D));
+}
+
+TEST(CRC8, Second)
+{
+    EXPECT_EQ(0xF1, solutionCrc8({0x12, 0x34}, 0x07));
+}
+
+TEST(CRC8, Third)
+{
+    EXPECT_EQ(0x6B, solutionCrc8({0x12, 0x34, 0x56, 0x78, 0x9}, 0x07));
+}
+
+TEST(CRC16, First)
+{
+    EXPECT_EQ(0x1373, solutionCrc16({0x1, 0x2}, 0x1021));
+}
+
+TEST(CRC16, Second)
+{
+    EXPECT_EQ(0xB82A, solutionCrc16({0x12, 0x34, 0x56, 0x78, 0x9}, 0x0589));
+}
+
+TEST(CRC32, First)
+{
+    EXPECT_EQ(0XC68796C7, solutionCrc32({0x12, 0x34, 0x56, 0x78, 0x9}, 0x04C11DB7));
+}
+
+TEST(CRC32, Second)
+{
+    EXPECT_EQ(0xE5997626, solutionCrc32({0x12, 0x34, 0x56, 0x78, 0x9}, 0x814141AB));
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

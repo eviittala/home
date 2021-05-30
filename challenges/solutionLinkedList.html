@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Linked List</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include "<a href="CircularDoubleLinkedList.html">CircularDoubleLinkedList.h</a>"
+#include "<a href="SinglyLinkedList.html">SinglyLinkedList.h</a>"
+
+namespace {
+TEST(LinkedList, SinglyLinkedList) {
+    SinglyLl&lt;uint64_t&gt; sll;
+    for (uint64_t i : {5, 6, 7, 8, 9, 10}) {
+        sll.push_back(i);
+    }
+    sll.push_front(99);
+    sll.push_front(98);
+    sll.print_list();
+}
+
+TEST(LinkedList, CircularDoubleLinkedList) {
+    CircularDLl&lt;uint64_t&gt; cdll;
+
+    for (uint64_t i : {5, 6, 7, 8, 9, 10}) {
+        cdll.push_back(i);
+    }
+    cdll.push_front(99);
+    cdll.push_front(98);
+    cdll.print_list();
+}
+} // namespace
+        </code>
+    </pre>
+</body>
+</html>

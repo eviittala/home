@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Calculate Points</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
+
+namespace
+{
+struct Point
+{
+    double x;
+    double y;
+};
+
+static void addFatalFailure() {
+  FAIL() &lt;&lt; "NOT RECTANGLE";
+}
+
+double calculateTriangleArea(const double a, const double b, const double c)
+{
+    //Heron's formula
+    const double base = (a + b + c)*(a + b - c)*(b + c - a)*(c + a - b);
+    return std::sqrt(base) / 4;
+}
+
+double calculateLengthOfSide(const Point arg1, const Point arg2)
+{
+    return std::sqrt(std::pow((arg2.x - arg1.x), 2) + std::pow((arg2.y - arg1.y), 2));
+}
+
+bool checkIsInside(const Point point, const std::vector&lt;Point&gt; rec)
+{
+    auto areSame = [] (const double a, const double b) -&gt; bool
+    {
+        return std::abs(a - b) &lt;= 0.1f;
+    };
+    const double a1 = calculateLengthOfSide(point, rec[0]);
+    const double b1 = calculateLengthOfSide(rec[1], point);
+    const double c1 = calculateLengthOfSide(rec[2], point);
+    const double d1 = calculateLengthOfSide(point, rec[3]);
+    const double ab = calculateLengthOfSide(rec[0], rec[1]);
+    const double bc = calculateLengthOfSide(rec[1], rec[2]);
+    const double cd = calculateLengthOfSide(rec[2], rec[3]);
+    const double da = calculateLengthOfSide(rec[3], rec[0]);
+    if (!areSame(ab, cd) || !areSame(bc, da))
+    {
+        addFatalFailure();
+        return false;
+    }
+
+    const double recArea = 0.5 * std::abs((rec[0].y - rec[2].y) * (rec[1].x - rec[3].x) + (rec[3].y - rec[1].y) *
+                (rec[0].x - rec[2].x));
+    const double triangleAreaAB = calculateTriangleArea(a1, b1, ab);
+    const double triangleAreaBC = calculateTriangleArea(b1, c1, bc);
+    const double triangleAreaCD = calculateTriangleArea(c1, d1, cd);
+    const double triangleAreaDA = calculateTriangleArea(d1, a1, da);
+    const double trianglesArea = triangleAreaAB + triangleAreaBC + triangleAreaCD + triangleAreaDA;
+    return areSame(recArea, trianglesArea);
+}
+
+uint64_t solution(const std::vector&lt;Point&gt; rec)
+{
+    constexpr double xMax{5.0};
+    constexpr double yMax{5.0};
+    uint64_t points{0};
+    for (double y{0.0}; y &lt; yMax; y += 1.0)
+    {
+        for (double x{0.0}; x &lt; xMax; x += 1.0)
+        {
+            if (checkIsInside({x, y}, rec))
+            {
+                ++points;
+            }
+        }
+    }
+    return points;
+}
+
+
+TEST(CalculateArea, first)
+{
+    std::vector&lt;Point&gt; rec{{0.5f, 0.5f}, {3.5f, 0.5f}, {3.5f, 3.5f}, {0.5f, 3.5f}};
+    EXPECT_EQ(9, solution(rec));
+}
+
+TEST(CalculateArea, second)
+{
+    std::vector&lt;Point&gt; rec{{1.5f, 0.5f}, {3.5f, 0.5f}, {3.5f, 3.5f}, {1.5f, 3.5f}};
+    EXPECT_EQ(6, solution(rec));
+}
+
+TEST(CalculateArea, third)
+{
+    std::vector&lt;Point&gt; rec{{2.0f, -1.0f}, {6.0f, 3.0f}, {4.0f, 5.0f}, {0.0f, 1.0f}};
+    EXPECT_EQ(17, solution(rec));
+}
+
+TEST(CalculateArea, fourth)
+{
+    std::vector&lt;Point&gt; rec{{3.0f, 1.5f}, {3.5f, 2.0f}, {2.0f, 3.5f}, {1.5f, 3.0f}};
+    EXPECT_EQ(2, solution(rec));
+}
+}
+
+        </code>
+    </pre>
+</body>
+</html>

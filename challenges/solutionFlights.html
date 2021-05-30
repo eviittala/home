@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Flights</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+namespace
+{
+using Flights = std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;;
+auto comp = [] (auto& arg1, auto& arg2) { return
+                std::lexicographical_compare(std::begin(arg1.second), std::end(arg1.second), std::begin(arg2.second),
+                                            std::end(arg2.second)); };
+bool isCorrectRoute(const Flights& flights)
+{
+    std::string expected = flights.front().second;
+    for (uint64_t i{1}; i &lt; flights.size(); ++i)
+    {
+        if (flights.at(i).first != expected)
+        {
+            return false;
+        }
+        expected = flights.at(i).second;
+    }
+    return true;
+}
+
+std::vector&lt;std::string&gt; solution(Flights& flights, std::string startingAirport)
+{
+    std::sort(std::begin(flights), std::end(flights), comp);
+    do
+    {
+        if (flights.front().first == startingAirport && isCorrectRoute(flights))
+        {
+            std::vector&lt;std::string&gt; result;
+            result.push_back(startingAirport);
+            for (auto& flight : flights)
+            {
+                result.push_back(flight.second);
+            }
+            return result;
+        }
+
+    } while(std::next_permutation(std::begin(flights), std::end(flights), comp));
+
+    std::vector&lt;std::string&gt; result{"Error"};
+    return result;
+}
+
+void printResult(const std::vector&lt;std::string&gt; result)
+{
+    for (uint64_t i{0}; i &lt; result.size(); ++i)
+    {
+        std::cout&lt;&lt;result.at(i);
+        if (i &lt; result.size() - 1)
+        {
+            std::cout&lt;&lt;" -&gt; ";
+        }
+    }
+    std::cout&lt;&lt;std::endl;
+}
+
+TEST(Flights, first)
+{
+    Flights flights{{"SFO", "HKO"}, {"YYZ", "SFO"}, {"YUL", "YYZ"}, {"HKO", "ORD"}};
+    printResult(solution(flights, "YUL"));
+}
+TEST(Flights, second)
+{
+    Flights flights{{"SFO", "COM"}, {"COM", "YYZ"}};
+    printResult(solution(flights, "COM"));
+}
+TEST(Flights, third)
+{
+    Flights flights{{"A", "C"}, {"A", "B"}, {"B", "C"}, {"C", "A"}};
+    printResult(solution(flights, "A"));
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

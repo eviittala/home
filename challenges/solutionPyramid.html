@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Pyramid</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;numeric&gt;
+
+namespace
+{
+using Values = const std::vector&lt;std::vector&lt;uint64_t&gt;&gt;;
+std::vector&lt;uint64_t&gt; solution(const uint64_t pos, const uint64_t row, Values& vals)
+{
+    if (row &lt; vals.size() - 1)
+    {
+        auto vecLeft = solution(pos, row + 1, vals);
+        auto vecRight = solution(pos + 1, row + 1, vals);
+
+        const uint64_t sumLeft = std::accumulate(std::begin(vecLeft), std::end(vecLeft), 0);
+        const uint64_t sumRight = std::accumulate(std::begin(vecRight), std::end(vecRight), 0);
+
+        if (sumLeft &lt; sumRight)
+        {
+            vecRight.resize(vecRight.size() + 1);
+            std::move_backward(std::begin(vecRight), std::end(vecRight) - 1, std::end(vecRight));
+            vecRight.front() = vals.at(row).at(pos);
+            return vecRight;
+        }
+        else
+        {
+            vecLeft.resize(vecLeft.size() + 1);
+            std::move_backward(std::begin(vecLeft), std::end(vecLeft) - 1, std::end(vecLeft));
+            vecLeft.front() = vals.at(row).at(pos);
+            return vecLeft;
+        }
+    }
+    else
+    {
+        const std::vector&lt;uint64_t&gt; ret{vals.back().at(pos)};
+        return ret;
+    }
+}
+
+void printResult(std::vector&lt;uint64_t&gt; result)
+{
+    std::cout&lt;&lt;"{";
+    for (uint64_t i{0}; i &lt; result.size(); ++i)
+    {
+        std::cout&lt;&lt;result.at(i);
+        if (i &lt; result.size() - 1)
+        {
+            std::cout&lt;&lt;", ";
+        }
+    }
+    std::cout&lt;&lt;"} and result is "&lt;&lt;std::accumulate(std::begin(result), std::end(result), 0)&lt;&lt;std::endl;
+}
+
+TEST(Pyramid, first)
+{
+    Values vec{{3}, {4, 3}, {2, 7, 9}, {8, 5, 9, 3}};
+    printResult(solution(0, 0, vec));
+}
+
+TEST(Pyramid, second)
+{
+    Values vec{{75}, {95, 64}, {17, 47, 82}, {18, 35, 87, 10}, {20, 4, 82, 47, 65}, {19, 1, 23, 75, 3, 34},
+        {88, 2, 77, 73, 7, 63, 67}, {99, 65, 4, 28, 6, 16, 70, 92}, {41, 41, 26, 56, 83, 40, 80, 70, 33},
+        {41, 48, 72, 33, 47, 32, 37, 16, 94, 29}, {53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14},
+        {70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57}, {91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48},
+        {63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31}, {4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}};
+    printResult(solution(0, 0, vec));
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

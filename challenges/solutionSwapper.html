@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Text Swapper</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;functional&gt;
+
+namespace
+{
+TEST(TextSwapper, first)
+{
+    std::function&lt;void(char*, char*)&gt; textSwapper {[&textSwapper] (char* start, char* end)
+    {
+        if (start != end)
+        {
+            std::swap(*start++, *--end);
+            textSwapper(start, end);
+        }
+    }};
+
+    char txt1[] = "Love";
+    textSwapper(txt1, txt1 + 4);
+    EXPECT_STREQ("evoL", txt1);
+}
+
+TEST(TextSwapper, second)
+{
+    auto len {[] (const char* arg) {
+        uint64_t ret{0};
+        while (*arg++ != '\0')
+            ++ret;
+        return ret;
+    }};
+    std::function&lt;void(char*)&gt; textSwapper {[&textSwapper, &len] (char* str)
+    {
+        for (uint64_t b{0}, e{len(str)}; b &lt; e; )
+        {
+            std::swap(str[b++], str[--e]);
+        }
+    }};
+
+    char txt1[] = "The best is yet to come";
+    textSwapper(txt1);
+    EXPECT_STREQ("emoc ot tey si tseb ehT", txt1);
+}
+}
+        </code>
+    </pre>
+</body>
+</html>

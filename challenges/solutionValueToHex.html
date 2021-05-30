@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Value To Hex</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;string&gt;
+
+namespace
+{
+template &lt;typename T&gt;
+std::string valueToHex(const T arg)
+{
+    static constexpr T base{16};
+    auto getStr{[] (const T val) -&gt; char { return val &lt; 10 ? '0' + val : 'A' + (val - 10); }};
+
+    if (arg &gt;= base)
+    {
+        std::string str = valueToHex(arg / base);
+        str += getStr(arg % base);
+        return str;
+    }
+    else
+    {
+        std::string str = "0x";
+        str += getStr(arg);
+        return str;
+    }
+}
+
+TEST(ValueToHex, first)
+{
+    std::cout&lt;&lt;valueToHex(1611)&lt;&lt;std::endl;
+    std::cout&lt;&lt;valueToHex(11259375)&lt;&lt;std::endl;
+}
+}
+        </code>
+    </pre>
+</body>
+</html>
