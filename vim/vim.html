@@ -136,11 +136,11 @@ set autoindent                          " Copy indent from current line when sta
 set ruler                               " Show the line and column number of the cursor position
 set hlsearch                            " When there is a previous search pattern, highlight all its matches
 set incsearch                           " While typing a search command, the matched string is highlighted
-set wildmenu                            " On pressing '<Tab>' to invoke completion
-set belloff=all                         " Bell off for all events
+set wildmenu                            " On pressing '' to invoke completion
 
-nmap ,w :echo winnr()<CR>
-nmap ,s :call SwitchSourceHeader()<CR>
+nmap ,w :echo winnr()&lt;CR&gt;
+nmap ,s :call SwitchSourceHeader()&lt;CR&gt;
+nmap &lt;C-A&gt; &lt;C-]&gt;
 
 set path+=$PWD/**
 
@@ -154,28 +154,36 @@ autocmd BufReadPost *
 
 
 function! SwitchSourceHeader()
-  "update!
-  if (expand ("%:e") =~ 'c\(c\|p\)\?p\?')
-      try
-          find %:t:r.hpp
-      catch /.*/    
-          find %:t:r.h
-      endtry    
-  else
-      try
-          find %:t:r.cpp
-      catch /.*/
-          find %:t:r.c
-      endtry
-  endif
-endfunction    
+    "update!
+    if (expand ("%:e") =~ 'c\(c\|p\)\?p\?')
+        try
+            edit %:r.hpp
+        catch /.*/
+            try
+                find %:t:r.hpp
+            catch /.*/
+                find %:t:r.h
+            endtry
+        endtry
+    else
+        try
+            edit %:r.cpp
+        catch /.*/
+            try
+                find %:t:r.cpp
+            catch /.*/
+                find %:t:r.c
+            endtry
+        endtry
+    endif
+endfunction
 
 function! FormatOnSave()
     let l:lines="all"
     if has('python')
-        pyf /usr/share/clang/clang-format-10/clang-format.py
+        pyf /usr/share/clang/clang-format-6.0/clang-format.py
     elseif has('python3')
-        py3f /usr/share/clang/clang-format-10/clang-format.py
+        py3f /usr/share/clang/clang-format-6.0/clang-format.py
     endif
 endfunction
                             <code></pre>
