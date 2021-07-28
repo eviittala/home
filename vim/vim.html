@@ -142,6 +142,8 @@ set belloff=all                         " Bell off for all events
 nmap ,w :echo winnr()<CR>
 nmap ,s :call SwitchSourceHeader()<CR>
 
+set path+=$PWD/**
+
 autocmd BufRead *.h,*.hpp,*.c,*.cpp set cindent
 autocmd BufWritePre *.h,*.hpp,*.c,*.cpp %s/\s\+$//e
 autocmd BufWritePre *.h,*.hpp,*.c,*.cpp call FormatOnSave()
