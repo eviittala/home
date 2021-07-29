@@ -156,25 +156,25 @@ autocmd BufReadPost *
 function! SwitchSourceHeader()
     "update!
     if (expand ("%:e") =~ 'c\(c\|p\)\?p\?')
-        try
+        if filereadable(expand("%:r.hpp"))
             edit %:r.hpp
-        catch /.*/
+        else
             try
                 find %:t:r.hpp
             catch /.*/
                 find %:t:r.h
             endtry
-        endtry
+        endif
     else
-        try
+        if filereadable(expand("%:r.cpp"))
             edit %:r.cpp
-        catch /.*/
+        else
             try
                 find %:t:r.cpp
             catch /.*/
                 find %:t:r.c
             endtry
-        endtry
+        endif
     endif
 endfunction
 
