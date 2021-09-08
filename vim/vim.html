@@ -140,8 +140,8 @@ set wildmenu                            " On pressing '&lt;Tab&gt;' to invoke co
 
 nmap ,w :echo winnr()&lt;CR&gt;
 nmap ,s :call SwitchSourceHeader()&lt;CR&gt;
-nmap &lt;C-A&gt; &lt;C-]&gt;
-nmap &lt;F3&gt; :grep! -r "&lt;cword&gt;" --exclude-dir={output,build,install_dir,sysroot} *&lt;CR&gt;
+nmap ,f &lt;C-]&gt;
+nmap &lt;F3&gt; :grep! -r "&lt;cword&gt;" --exclude-dir={output,build,install_dir,sysroot} --exclude=tags *&lt;CR&gt;
 
 set path+=$PWD/**
 
