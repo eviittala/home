@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution PhoneBook</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+#include &lt;map&gt;
+#include &lt;string&gt;
+
+namespace {
+using Map = std::map&lt;std::string, std::string&gt;;
+using MapIt = std::map&lt;std::string, std::string&gt;::iterator;
+
+class PhoneBook {
+public:
+    PhoneBook() = default;
+
+    void add(const std::string name, const std::string number) {
+        phoneBook.emplace(name, number);
+    }
+
+    void remove(const std::string name) {
+        const auto found = phoneBook.find(name);
+        if (found != std::end(phoneBook)) {
+            phoneBook.erase(found);
+        }
+    }
+
+    MapIt begin() { return std::begin(phoneBook); }
+    MapIt end() { return std::end(phoneBook); }
+
+private:
+    Map phoneBook;
+};
+
+TEST(PhoneBook, first) {
+    PhoneBook pbook;
+    pbook.add("Charon", "0415557923");
+    pbook.add("Adam", "0435557983");
+    pbook.add("Jack", "0449557922");
+    pbook.add("Scarlett", "0435555923");
+    pbook.add("Jessica", "0415957923");
+    pbook.add("Pamela", "0465517923");
+    pbook.add("Keanu", "0495057023");
+    pbook.add("Xman", "5829676");
+    pbook.remove("Xman");
+    for (const auto &amp;elem : pbook) {
+        std::cout &lt;&lt; elem.first &lt;&lt; " -&gt; " &lt;&lt; elem.second &lt;&lt; std::endl;
+    }
+}
+
+} // namespace
+        </code>
+    </pre>
+</body>
+</html>

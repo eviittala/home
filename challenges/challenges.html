@@ -41,6 +41,7 @@
 							<li><a href="#CRC">13. CRC</a></li>
 							<li><a href="#MULTIPLICATION">14. Multiplication</a></li>
 							<li><a href="#CYLINDER">15. Cylinder</a></li>
+							<li><a href="#PHONEBOOK">16. PhoneBook</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -561,7 +562,7 @@ lList.push_front(98);</code></pre>
                         <br>
                         <br>
                         <p>
-                        Posible input and ouput: <br>
+                        Possible input and output: <br>
                         <b>Input:</b> ./multi 2<br>
                         <b>Output:</b><pre><code>
 How much is 2 * 5 = 10
@@ -602,12 +603,48 @@ Well done!</code></pre>
                         <br>
                         <br>
                         <p>
-                        Posible input and ouput: <br>
+                        Possible input and output: <br>
                         <b>Input:</b> Radius: 5m, Height 5m<br>
                         <b>Output:</b> cyl.area() == 314, cyl.volume() == 392.5 <br>
                         </p>
                         <p class="solutions">
                             <a href="solutionCylinder.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="PHONEBOOK">
+                        <header>
+                            <h1>16. Phone Book</h1>
+                        </header>
+                        <p>Implement a class PhoneBook. It stores person's name and phone number.  The PhoneBook is sorted in alphabetical order. Class should have methods 'add' and 'remove'. Add inserts a new person to phone book and remove deletes existing element if found.</p>
+                        <br>
+                        <br>
+                        <p>
+                        Possible input and output: <br>
+                        <b>Input:</b><pre><code>
+PhoneBook pbook;
+pbook.add("Charon", "0415557923");
+pbook.add("Adam", "0435557983");
+pbook.add("Jack", "0449557922");
+pbook.add("Scarlett", "0435555923");
+pbook.add("Jessica", "0415957923");
+pbook.add("Pamela", "0465517923");
+pbook.add("Keanu", "0495057023");
+pbook.add("Xman", "5829676");
+pbook.remove("Xman");
+</code></pre>
+                        <b>Output:</b> <pre><code> 
+Adam -&gt; 0435557983
+Charon -&gt; 0415557923
+Jack -&gt; 0449557922
+Jessica -&gt; 0415957923
+Keanu -&gt; 0495057023
+Pamela -&gt; 0465517923
+Scarlett -&gt; 0435555923
+                        </code></pre>
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionPhoneBook.html">See solution</a>
                         </p>
                     </article>
 
