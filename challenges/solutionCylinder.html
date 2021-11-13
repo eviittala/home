@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Cylinder</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;gtest/gtest.h&gt;
+
+namespace {
+
+constexpr double PI = 3.14;
+
+class Circle {
+public:
+    explicit Circle(const double r) : r{r} {}
+    double circumreference() const noexcept { return 2 * PI * r; }
+    double area() const noexcept { return PI * r * r; }
+
+private:
+    double r;
+};
+
+class Cylinder {
+public:
+    explicit Cylinder(const double r, const double h) : circle{r}, h{h} {}
+    [[nodiscard]] double area() const noexcept {
+        return circle.circumreference() * h + 2 * circle.area();
+    }
+    [[nodiscard]] double volume() const noexcept { return circle.area() * h; }
+
+private:
+    Circle circle;
+    double h;
+};
+
+TEST(Cylinder, first) {
+    Cylinder cyl{5, 5};
+    EXPECT_EQ(314, cyl.area());
+    EXPECT_EQ(392.5, cyl.volume());
+}
+
+} // namespace
+        </code>
+    </pre>
+</body>
+</html>
