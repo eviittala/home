@@ -1,10 +1,6 @@
 /*https://www.w3schools.com/html/html_layout.asp*/
 body {
-    background-color: #b5a789;
-   /* margin-left: 20%;
-    margin-right: 20%;
-    border: 2px dotted black;
-    padding: 10px 10px 10px 10px;*/
+    background-color: #aaaaaa;
     font-family: Georgia, "Times New Roman", Times, serif;
     font-size: normal;
     margin: 0px;
@@ -12,7 +8,7 @@ body {
 
 header.top {
     text-align: center;
-    background-color: #675c47;
+    background-color: DodgerBlue;
     color: #efe5d0;
     margin: 10px 10px 0px 10px;
     padding: 30px;
@@ -26,25 +22,27 @@ nav {
 }
 
 nav ul {
-    background-color: #efe5d0;
+    background-color: #aaaaaa;
     margin: 0px;
     list-style-type: none;
     padding: 5px 0px 5px 0px;
+    text-align: center;
 }
 
 nav ul li {
     display: inline;
     padding: 5px 10px 5px 10px;
+    background-color: lightgray;
 }
 
 nav ul li a:link, nav ul li a:visited {
-    color: #954b4b;
+    color: black;
     border-bottom: none;
     font-weight: bold;
 }
 
 nav ul li.selected {
-    background-color: #c8b99c;
+    background-color: gray;
 }
 
 nav ol {
@@ -56,9 +54,9 @@ nav ol {
 nav ol li {
     padding: 8px;
     margin-bottom: 7px;
-    background-color: #c8b99c;
+    background-color: lightgray;
     width: 100%;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
 }
 
 nav ol li:hover {
@@ -66,7 +64,7 @@ nav ol li:hover {
 }
 
 nav ol li a:link, nav ol li a:visited {
-    color: #954b4b;
+    color: black;
     display: block;
     border-bottom: none;
     font-weight: bold;
@@ -85,7 +83,7 @@ div#tableRow {
 #sidebar {
     display: table-cell;
     padding: 15px;
-    background: #efe5d0;
+    background: white;
     vertical-align: top;
     width: 400px;
 }
@@ -93,7 +91,7 @@ div#tableRow {
 aside {
     display: table-cell;
     padding: 15px;
-    background: #efe5d0;
+    background: white;
     width: 100vw;
     vertical-align: top;
     border: 2px solid gray;
@@ -101,7 +99,7 @@ aside {
 
 footer {
     text-align: center;
-    background-color: #675c47;
+    background-color: DodgerBlue;
     color: #efe5d0;
     padding: 15px;
     margin: 0px 10px 10px 10px;
