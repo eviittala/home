@@ -25,100 +25,103 @@
                 <div id="sidebar">
                     <nav>
                         <ol>
-                            <li><a href="#WHITESPACE">1. Delete whitespace</a></li>
-                            <li><a href="#SWITCHSOURCE">2. Switch Source</a></li>
-                            <li><a href="#WINNR">3. Current window number</a></li>
-                            <li><a href="#SORTINCLUDES">4. Sort includes</a></li>
-                            <li><a href="#NUMBERTOHEX">5. Number to hex</a></li>
+                            <li><a href="#BASIC_COMMANDS">1. Basic Commands</a></li>
+                            <li><a href="#INDEXING">2. Environment Indexing</a></li>
+                            <li><a href="#NERDTREE">3. NERDTree</a></li>
+                            <li><a href="#FILE_COMPARISON">4. File Comparison</a></li>
+                            <li><a href="#WINDOWING">5. Windowing</a></li>
                             <li><a href="#MYVIMRC">My vimrc</a></li>
                         </ol>
                     </nav>
                 </div>
                <!-- <div id="main"> -->
                 <aside>
-                    <article id="WHITESPACE">
+                    <article id="BASIC_COMMANDS">
                         <header>
-                            <h1>1, Delete whitespace at end of line</h1>
+                            <h1>1. Basic Commands</h1>
                         </header>
                         <p>
-                            <pre><code>
-:%s/\s\+$//e
-                            </code></pre>
+                            <ul>
+                                <li>vim //Opens vim</li>
+                                <li>:q //Ends vim</li>
+                                <li>:edit <file> //Opens file</li>
+                                <li>:find <file> //Find file</li>
+                                <li>:sfind <file> //Find file and opens it to new window</li>
+                                <li>i //Goes to insert mode</li>
+                                <li>&lt;esc&gt; //Exits insert mode</li>
+                                <li>:set cursorline //Highlights current line</li>
+                                <li>:%s/\s\+$//e //Cleans white space in the end of the line </li>
+                                <li>:echo winnr() //Shows window number</li>
+                            </ul>
                         </p>
                     </article>
                     <hr>
-                    <article id="SWITCHSOURCE">
+                    <article id="INDEXING">
                         <header>
-                            <h1>2. Switch source file</h1>
+                            <h1>2. Environment Indexing</h1>
                         </header>
                         <p>
-                            <pre><code>
-function! SwitchSourceHeader()
-  "update!
-  if (expand ("%:e") =~ 'c\(c\|p\)\?p\?')
-      try
-          find %:t:r.hpp
-      catch /.*/    
-          find %:t:r.h
-      endtry    
-  else
-      try
-          find %:t:r.cpp
-      catch /.*/
-          find %:t:r.c
-      endtry
-  endif
-endfunction
-                            </code></pre>
+                            <ul>
+                                <li>ctags -R --exclude=.git	//Indexes environment</li>
+                                <li>&lt;C-]&gt; //Searches word under cursor from tags</li>
+                                <li>&lt;C-w&gt;} //Opens a preview window with the location of the tag definition. The cursor does not change its position, so tag stack is not updated</li>
+                                <li>&lt;C-w&gt;z //Closes the preview window</li>
+                                <li>:tag &lt;word&gt;	//Searches &lt;word&gt; from tags</li>
+                                <li>:ptag &lt;word&gt; //Searches &lt;word&gt; from tags and open it to preview-window</li>
+                                <li>:tjump &lt;word&gt; //Searches &lt;word&gt; from tags and lists all hits</li>
+                            </ul>
                         </p>
                     </article>
                     <hr>
-                    <article id="WINNR">
+                    <article id="NERDTREE">
                         <header>
-                            <h1>3. Current window number</h1>
+                            <h1>3. NERDTree</h1>
                         </header>
                         <p>
-                            <pre><code>
-:echo winnr()
-                            </code></pre>
+                            <ul>
+                                <li>https://github.com/preservim/nerdtree</li>
+                            </ul>
                         </p>
                     </article>
                     <hr>
-                    <article id="SORTINCLUDES">
+                    <article id="FILE_COMPARISON">
                         <header>
-                            <h1>4. Sort includes</h1>
+                            <h1>4. File Comparison</h1>
                         </header>
                         <p>
-                            <pre><code>
-function! SortIncludes()
-    let currentPos = getcurpos()
-    let cmd = 'g/#include/.,/^\(\(#include\)\@!.\)*$/-1sort'
-    call execute(cmd)
-    call setpos('.', currentPos)
-endfunction    
-                            </code></pre>
+                            <ul>
+                                <li>vimdiff &lt;file1&gt; &lt;file2&gt;</li>
+                                <li>:diffthis				//Compares files in split window</li>
+                                <li>:diffoff				//Ends comparison</li>
+                                <li>:windo diffthis			//Compares splits which are opened</li>
+                            </ul>
                         </p>
                     </article>
                     <hr>
-                    <article id="NUMBERTOHEX">
+                    <article id="WINDOWING">
                         <header>
-                            <h1>5. Number to hex</h1>
+                            <h1>5. Windowing</h1>
                         </header>
                         <p>
-                            <pre><code>
-function! NumberToHex()
-    function! Validate(val) abort
-        if a:val[0] == 0 &amp;&amp; a:val[1] =~ '\(x\|X\)'
-            echoerr "Number is already hex!"
-            return
-        endif
-    endfunction
-    let number = expand("&lt;cword&gt;")
-    call Validate(number)
-    let cmd = ':s/\&lt;' . expand("&lt;cword&gt;") . '\&gt;/\=printf("0x%016x", submatch(0))/'
-    execute cmd
-endfunction
-                            </code></pre>
+                            <ul>
+                                <li>:new				//Opens new window</li>
+                                <li>:vnew				//Opens new window aside (Vertical split)</li>
+                                <li>:split or &lt;C-w&gt;s		//Splits current window</li>
+                                <li>:vsplit or &lt;C-w&gt;v		//Splits current window aside (Vectical split)</li>
+                                <li>&lt;C-w&gt; +_ 			//Increases view to full vertical window</li>
+                                <li>&lt;C-w&gt; + | 			//Increases view to full horizontal window</li>
+                                <li>&lt;C-w&gt; [val] +	 		//Increases view with val vertically</li>
+                                <li>&lt;C-w&gt; [val] - 			//Decreases view with val vertically</li>
+                                <li>&lt;C-w&gt; [val] &gt; 			//Increases view with val horizontally</li>
+                                <li>&lt;C-w&gt; [val] &lt; 			//Decreases view with val horizontally</li>
+                                <li>&lt;C-w&gt; &lt;C-w&gt;			//Switch to  next window</li>
+                                <li>[val| &lt;C-w&gt; &lt;C-w&gt;		//Switch to window number [val]</li>
+                                <li>&lt;C-w&gt;=			//Set default sizes to all windows</li>
+                                <li>&lt;C-w&gt;q			//Close window</li>
+                                <li>gf				//Open file under cursor</li>
+                                <li>&lt;C-w&gt;F			//Open file under cursor in a new window</li>
+                                <li>&lt;C-w&gt;gF			//Open file under cursor in a new tab</li>
+                            </ul>
                         </p>
                     </article>
                     <hr>
@@ -137,11 +140,16 @@ set ruler                               " Show the line and column number of the
 set hlsearch                            " When there is a previous search pattern, highlight all its matches
 set incsearch                           " While typing a search command, the matched string is highlighted
 set wildmenu                            " On pressing '&lt;Tab&gt;' to invoke completion
+set belloff=all                         " No sounds
+
+let g:termdebug_wide=1                  " Wide debugging window
 
 nmap ,w :echo winnr()&lt;CR&gt;
 nmap ,s :call SwitchSourceHeader()&lt;CR&gt;
 nmap ,f &lt;C-]&gt;
-nmap &lt;F3&gt; :grep! -r "&lt;cword&gt;" --exclude-dir={output,build,install_dir,sysroot} --exclude=tags *&lt;CR&gt;
+nmap &lt;F3&gt; :grep! -rI "&lt;cword&gt;" --exclude-dir={output,build,install_dir,sysroot} --exclude=tags *&lt;CR&gt;
+nmap &lt;F4&gt; :execute "tag " . expand("&lt;cword&gt;")&lt;CR&gt;
+nmap &lt;F5&gt; :call PreviewWord()&lt;CR&gt;
 
 set path+=$PWD/**
 
@@ -152,7 +160,7 @@ autocmd BufReadPost *
     \ if line("'\"") &gt;= 1 &amp;&amp; line("'\"") &lt;= line("$") &amp;&amp; &amp;ft !~# 'commit'
     \ |   exe "normal! g`\""
     \ | endif
-
+" au! CursorHold *.hpp,*.cpp nested call PreviewWord()
 
 function! SwitchSourceHeader()
     "update!
@@ -187,6 +195,49 @@ function! FormatOnSave()
         py3f /usr/share/clang/clang-format-6.0/clang-format.py
     endif
 endfunction
+
+function! PreviewWord()
+    if &amp;previewwindow           " don't do this in the preview window
+        return
+    endif
+    let w = expand("&lt;cword&gt;")       " get the word under cursor
+    if w != ""              " if there is one ":ptag" to it
+        " Delete any existing highlight before showing another tag
+        silent! wincmd P            " jump to preview window
+        if &amp;previewwindow           " if we really get there...
+            match none          " delete existing highlight
+            wincmd p            " back to old window
+        endif
+
+        " Try displaying a matching tag for the word under the cursor
+        let v:errmsg = ""
+        exe "silent! ptag " . w
+        if v:errmsg =~ "tag not found"
+            return
+        endif
+
+        silent! wincmd P            " jump to preview window
+        if &amp;previewwindow       " if we really get there...
+            if has("folding")
+                silent! .foldopen       " don't want a closed fold
+            endif
+            call search("$", "b")       " to end of previous line
+            let w = substitute(w, '\\', '\\\\', "")
+            call search('\&lt;\V' . w . '\&gt;')  " position cursor on match
+            " Add a match highlight to the word at this position
+            "hi previewWord term=bold ctermbg=green guibg=green
+            hi previewWord term=bold ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
+            exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
+
+            wincmd p            " back to old window
+        endif
+    endif
+endfunction
+
+execute pathogen#infect()
+let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
+let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_python_checkers = ['python']
                             <code></pre>
                         </p>
                     </article>

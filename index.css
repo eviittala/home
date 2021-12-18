@@ -17,7 +17,7 @@ header.top {
 }
 
 nav {
-    background-color: #efe5d0;
+    /* background-color: red; */
     margin: 10px 10px 0px 10px;
 }
 
@@ -33,6 +33,7 @@ nav ul li {
     display: inline;
     padding: 5px 10px 5px 10px;
     background-color: lightgray;
+    box-shadow: 0 2px 2px black, 0 2px 2px black;
 }
 
 nav ul li a:link, nav ul li a:visited {
@@ -56,7 +57,7 @@ nav ol li {
     margin-bottom: 7px;
     background-color: lightgray;
     width: 100%;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+    box-shadow: 0 2px 2px black, 0 2px 2px black;
 }
 
 nav ol li:hover {
