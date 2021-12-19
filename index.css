@@ -16,6 +16,33 @@ header.top {
     text-shadow: 4px 4px black;
 }
 
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    text-align: center;
+    padding: 10px;
+    margin: 0px 10px 10px 10px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a {
+    float: center;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
 nav ol {
     list-style-type: none;
     margin: 0;
@@ -86,29 +113,3 @@ pre code {
     text-align: center;
 }
 
-.topnav {
-    overflow: hidden;
-    background-color: #333;
-    text-align: center;
-    padding: 10px;
-    margin: 0px 10px 10px 10px;
-}
-
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.topnav a {
-    float: center;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-.topnav a.active {
-    background-color: #04AA6D;
-    color: white;
-}
