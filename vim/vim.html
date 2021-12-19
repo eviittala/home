@@ -11,14 +11,12 @@
             <h1 id="top">Eero Viittala homepage</h1>
         </header>
         
-        <nav>
-            <ul>
-                <li><a href="../index.html">HOME</a></li>
-                <li><a href="../challenges/challenges.html">CHALLENGES</a></li>
-                <li class="selected"><a href="../vim/vim.html">VIM</a></li>
-                <li><a href="../games/games.html">GAMES</a></li>
-            </ul>
-        </nav>
+        <div class="topnav">
+            <a href="../index.html">Home</a>
+            <a href="../challenges/challenges.html">Challenges</a>
+            <a class="active" href="vim.html">Vim</a>
+            <a href="../games/games.html">Games</a>
+        </div>
 
         <div id="tableContainer">
             <div id="tableRow">
@@ -30,6 +28,10 @@
                             <li><a href="#NERDTREE">3. NERDTree</a></li>
                             <li><a href="#FILE_COMPARISON">4. File Comparison</a></li>
                             <li><a href="#WINDOWING">5. Windowing</a></li>
+                            <li><a href="#TABS">5. Tabs</a></li>
+                            <li><a href="#FILE_SEACRHING">6. File Searching</a></li>
+                            <li><a href="#GDB">7. GDB</a></li>
+                            <li><a href="#TERMINAL">8. Terminal</a></li>
                             <li><a href="#MYVIMRC">My vimrc</a></li>
                         </ol>
                     </nav>
@@ -121,6 +123,67 @@
                                 <li>gf				//Open file under cursor</li>
                                 <li>&lt;C-w&gt;F			//Open file under cursor in a new window</li>
                                 <li>&lt;C-w&gt;gF			//Open file under cursor in a new tab</li>
+                            </ul>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="TABS">
+                        <header>
+                            <h1>6. Tabs</h1>
+                        </header>
+                        <p>
+                            <ul>
+                                <li>:tabnew 	//Opens newtab</li>
+                                <li>:tabclose  	//Closes tab</li>
+                                <li>gt		//Goes to next tab</li>
+                                <li>gT		//Goes to previous tab</li>
+                                <li>[val]gt		//Goes to tab [val]</li>
+                            </ul>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="FILE_SEACRHING">
+                        <header>
+                            <h1>7. File Searching</h1>
+                        </header>
+                        <p>
+                            <ul>
+                                <li>:find &lt;file&gt; 	//Seach file and opens it</li>
+                                <li>:find &lt;sfile&gt; 	//Seach file and opens it to new window</li>
+                            </ul>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="GDB">
+                        <header>
+                            <h1>8. GDB</h1>
+                        </header>
+                        <p>
+                            <ul>
+                                <li>let g:termdebug_wide=1	//Wide debugging screen add this to .vimrc</li>
+                                <li>packadd termdebug		//Adds termdebug package</li>
+                                <li>Termdebug &lt;binary&gt;              //Binary is optional, but then ‘file’ command must be used</li>
+                                <li>file &lt;binary&gt;			//Add binary to GDB</li>
+                                <li>run -v				//Runs binary</li>
+                                <li>break &lt;file&gt;:&lt;line&gt;		//Add breakpoint</li>
+                                <li>next				//Goes to next line</li>
+                                <li>bt				//Prints call stack</li>
+                                <li>print &lt;variable&gt;			//Print the variable’s content</li>
+                                <li>K				//Print the content of variable under cursor</li>
+                                <li>watch -l &lt;variable&gt;		//Watchpoint stops execution when value is changed</li>
+                            </ul>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="TERMINAL">
+                        <header>
+                            <h1>8. Terminal</h1>
+                        </header>
+                        <p>
+                            <ul>
+                                <li>:terminal	//Opens terminal window</li>
+                                <li>&lt;C-w&gt;N	//Makes terminal inactive, press ‘i’ if you want to get back active terminal</li>
+                                <li>&lt;C-w&gt;”[val]	//Paste from [val] -register</li>
                             </ul>
                         </p>
                     </article>

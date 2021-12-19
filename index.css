@@ -16,36 +16,6 @@ header.top {
     text-shadow: 4px 4px black;
 }
 
-nav {
-    /* background-color: red; */
-    margin: 10px 10px 0px 10px;
-}
-
-nav ul {
-    background-color: #aaaaaa;
-    margin: 0px;
-    list-style-type: none;
-    padding: 5px 0px 5px 0px;
-    text-align: center;
-}
-
-nav ul li {
-    display: inline;
-    padding: 5px 10px 5px 10px;
-    background-color: lightgray;
-    box-shadow: 0 2px 2px black, 0 2px 2px black;
-}
-
-nav ul li a:link, nav ul li a:visited {
-    color: black;
-    border-bottom: none;
-    font-weight: bold;
-}
-
-nav ul li.selected {
-    background-color: gray;
-}
-
 nav ol {
     list-style-type: none;
     margin: 0;
@@ -56,7 +26,7 @@ nav ol li {
     padding: 8px;
     margin-bottom: 7px;
     background-color: lightgray;
-    width: 100%;
+    /*width: 95%;*/
     box-shadow: 0 2px 2px black, 0 2px 2px black;
 }
 
@@ -114,4 +84,31 @@ pre code {
 
 .solutions {
     text-align: center;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    text-align: center;
+    padding: 10px;
+    margin: 0px 10px 10px 10px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a {
+    float: center;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
 }
