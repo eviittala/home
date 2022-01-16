@@ -88,7 +88,7 @@ def gameLoop(run = False):
                     checkCells()
                 if event.key == pygame.K_c:
                     for pos in range(number_of_cells_x * number_of_cells_y):
-                        cells[pos].isAlive = False
+                        cells[pos].nextStage = False
             if event.type == MOUSEBUTTONDOWN:
                 mousePressed = pygame.mouse.get_pressed()
                 for pos in range(number_of_cells_x * number_of_cells_y):
