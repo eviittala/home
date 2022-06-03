@@ -197,6 +197,7 @@
                         <p>
                             <pre><code>
 set number                              " Set linenumbers
+set relativenumber                      " Set relative linenumbers
 set splitbelow                          " New window below
 set splitright                          " New window right
 set tabstop=4 shiftwidth=4 expandtab    " Tab to space
@@ -255,9 +256,9 @@ endfunction
 function! FormatOnSave()
     let l:lines="all"
     if has('python')
-        pyf /usr/share/clang/clang-format-6.0/clang-format.py
+        pyf /usr/share/clang/clang-format-10/clang-format.py
     elseif has('python3')
-        py3f /usr/share/clang/clang-format-6.0/clang-format.py
+        py3f /usr/share/clang/clang-format-10/clang-format.py
     endif
 endfunction
 
