@@ -216,6 +216,8 @@ nmap ,f &lt;C-]&gt;
 nmap &lt;F3&gt; :grep! -rI "&lt;cword&gt;" --exclude-dir={output,build,install_dir,sysroot} --exclude=tags *&lt;CR&gt;
 nmap &lt;F4&gt; :execute "tag " . expand("&lt;cword&gt;")&lt;CR&gt;
 nmap &lt;F5&gt; :call PreviewWord()&lt;CR&gt;
+nmap ,h :Entities 1&lt;CR&gt;
+nmap ,H :Entities 0&lt;CR&gt;
 
 set path+=$PWD/**
 
@@ -300,8 +302,27 @@ function! PreviewWord()
     endif
 endfunction
 
+" Escape/unescape &amp; &lt; &gt; HTML entities in range (default current line).
+function! HtmlEntities(line1, line2, action)
+  let search = @/
+  let range = 'silent ' . a:line1 . ',' . a:line2
+  if a:action == 0  " must convert &amp;amp; last
+    execute range . 'sno/&amp;lt;/&lt;/eg'
+    execute range . 'sno/&amp;gt;/&gt;/eg'
+    execute range . 'sno/&amp;amp;/&amp;/eg'
+  else              " must convert &amp; first
+    execute range . 'sno/&amp;/&amp;amp;/eg'
+    execute range . 'sno/&lt;/&amp;lt;/eg'
+    execute range . 'sno/&gt;/&amp;gt;/eg'
+  endif
+  nohl
+  let @/ = search
+endfunction
+
+command! -range -nargs=1 Entities call HtmlEntities(&lt;line1&gt;, &lt;line2&gt;, &lt;args&gt;)
+
 execute pathogen#infect()
-let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
+let g:syntastic_cpp_config_file = '~/.syntastic_cpp_config'
 let g:syntastic_python_python_exec = 'python3'
 let g:syntastic_python_checkers = ['python']
                             <code></pre>
