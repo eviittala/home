@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>Solution Vienere Cipher</title>
+        <link type="text/css" rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <pre>
+        <code>
+#include &lt;cctype&gt;
+#include &lt;iostream&gt;
+
+namespace {
+const std::string abc{"abcdefghijklmnopqrstuvwxyz"};
+}
+
+std::string cryptText(const std::string &amp;plaintext, const std::string &amp;key) {
+  std::string retTxt;
+  uint32_t counter{};
+
+  for (char c : plaintext) {
+    if (std::isalpha(c)) {
+      const uint32_t rotate = key[counter % key.size()] - 'a';
+      const std::string chipher = abc.substr(rotate) + abc.substr(0, rotate);
+      retTxt += chipher[c - 'a'];
+    } else {
+      retTxt += c;
+    }
+    ++counter;
+  }
+  return retTxt;
+}
+
+int main() {
+  const std::string txt{"coding is beautiful"};
+  const std::string keyword{"random"};
+  std::cout &lt;&lt; cryptText(txt, keyword) &lt;&lt; std::endl; // toqlbs if pqrugltgc
+  std::cout &lt;&lt; cryptText("attackatdawn", "lemon") &lt;&lt; std::endl; // lxfopvefrnhr
+
+  return 0;
+}
+        </code>
+    </pre>
+</body>
+</html>

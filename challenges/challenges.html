@@ -42,6 +42,8 @@
 							<li><a href="#MULTIPLICATION">14. Multiplication</a></li>
 							<li><a href="#CYLINDER">15. Cylinder</a></li>
 							<li><a href="#PHONEBOOK">16. PhoneBook</a></li>
+							<li><a href="#VIGENERECIPHER">17. Vigenere Cipher</a></li>
+							<li><a href="#MYSTORAGE">18. My Storage</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -645,6 +647,53 @@ Scarlett -&gt; 0435555923
                         </p>
                         <p class="solutions">
                             <a href="solutionPhoneBook.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="VIGENERECIPHER">
+                        <header>
+                            <h1>17. Vigenere Cipher</h1>
+                        </header>
+                        <p>Implement <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenere Chipheri</a></p>
+                        <br>
+                        <br>
+                        <p>
+                        Possible input and output: <br>
+                        <p><b>keyword:</b> random, <b>input text:</b> coding is beautiful, <b>ciphered text:</b> toqlbs if pqrugltgc</p>
+                        <p><b>keyword:</b> lemon, <b>input text:</b> attackatdawn, <b>ciphered text:</b> lxfopvefrnhr
+                        </p>
+                        <p class="solutions">
+                            <a href="solutionVienereCipher.html">See solution</a>
+                        </p>
+                    </article>
+                    <hr>
+                    <article id="MYSTORAGE">
+                        <header>
+                            <h1>18. My Storage</h1>
+                        </header>
+                        <p>Implement class MyStorage. It should save data to the singly linked list. Implement also begin and end functions and iterator, so storage can be printed out by using range-based for loop</p>
+                        <br>
+                        <br>
+                        <p>
+                        Possible input and output: <br>
+                        <b>Input:</b><pre><code>
+const uint64_t val1{3u};
+MyStorage&lt;uint64_t&gt; myStorage;
+myStorage = Init(val1, 4, 5);
+
+std::cout &lt;&lt; "Print Data: " &lt;&lt; std::endl;
+for (auto it : myStorage) {
+    std::cout &lt;&lt; it.val &lt;&lt; std::endl;
+}
+</code></pre>
+                        <b>Output:</b> <pre><code> 
+Print Data:
+3
+4
+5
+                        </code></pre>
+                        <p class="solutions">
+                            <a href="solutionMyStorage.html">See solution</a>
                         </p>
                     </article>
 
