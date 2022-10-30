@@ -8,31 +8,33 @@
 <body>
     <pre>
         <code>
-import sys
 import random
+import sys
 
-vals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+multi = []
+def makeList():
+    for i in range(2, 10):
+        for j in range(1, 10):
+            multi.append([i, j])
 
-def ask(args):
-    random.seed()
-    while len(vals) &gt; 0:
-        rand = random.randrange(0, len(vals))
-        inVal = input("{0} * {1} = ".format(args[1], vals[rand]))
-        answer = int(args[1]) * vals.pop(rand)
-
-        if int(inVal) == int(answer):
-            print("Right")
+def check(val, tries = 0):
+    answer = int(input("{0} * {1} = ".format(val[0], val[1])))
+    if answer == val[0] * val[1]:
+        print("Right! ({0})".format(len(multi)))
+    else:
+        if tries == 0:
+            print("Wrong! Please try again")
+            check(val, tries + 1)
         else:
-            print("Wrong, correct answer is {0}". format(answer))
-            sys.exit("You'll need to practice more")
-
-    print("Well done")        
+            sys.exit("You'll need to practice more!")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) &gt; 2:
-        sys.exit("Too many args have been given")
-    ask(sys.argv);
+    makeList()
+    while len(multi) &gt; 0:
+        rand = random.randrange(0, len(multi))
+        check(multi.pop(rand))
+    print("Congrats! You got all right!")
         </code>
     </pre>
 </body>
