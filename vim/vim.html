@@ -212,19 +212,19 @@ set shiftround                          " CTRL-T and CTRL-D in Insert mode alway
                                         " a multiple of 'shiftwidth' (this is Vi compatible).
 set history=200                         " Saves 200 Ex commands
 set nocompatible                        " No vi compatible
-let mapleader= "\<Space>"
+let mapleader= "\&lt;Space&gt;"
 let g:termdebug_wide=1                  " Wide debugging window
 syntax on
 filetype plugin indent on
 
-nnoremap <leader>w :echo winnr()<CR>
-nnoremap <leader>q :call SwitchSourceHeader()<CR>
-nnoremap <leader>f <C-]>
+nnoremap &lt;leader&gt;w :echo winnr()&lt;CR&gt;
+nnoremap &lt;leader&gt;q :call SwitchSourceHeader()&lt;CR&gt;
+nnoremap &lt;leader&gt;f &lt;C-]&gt;
 noremap &lt;F3&gt; :grep! -rI "&lt;cword&gt;" --exclude-dir={output,build,install_dir,sysroot} --exclude=tags *&lt;CR&gt;
 noremap &lt;F4&gt; :execute "tag " . expand("&lt;cword&gt;")&lt;CR&gt;
 noremap &lt;F5&gt; :call PreviewWord()&lt;CR&gt;
-nnoremap <leader>h :Entities 1<CR>
-nnoremap <leader>H :Entities 0<CR>
+nnoremap &lt;leader&gt;h :Entities 1&lt;CR&gt;
+nnoremap &lt;leader&gt;H :Entities 0&lt;CR&gt;
 
 set path+=$PWD/**
 
@@ -234,7 +234,7 @@ augroup mygroup
     autocmd BufWritePre *.h,*.hpp,*.c,*.cpp %s/\s\+$//e
     autocmd BufWritePre *.h,*.hpp,*.c,*.cpp call FormatOnSave()
     autocmd BufReadPost *
-        \ if line("'\"") &gt;= 1 &amp;&amp; line("'\"") &lt;= line("$") &amp;&amp; &amp;ft !~# 'commit'
+        \ if line("'\"") &amp;gt;= 1 &amp;amp;&amp;amp; line("'\"") &amp;lt;= line("$") &amp;amp;&amp;amp; &amp;amp;ft !~# 'commit'
         \ |   exe "normal! g`\""
         \ | endif
     " au! CursorHold *.hpp,*.cpp nested call PreviewWord()
