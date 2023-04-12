@@ -196,22 +196,24 @@
                         </header>
                         <p>
                             <pre><code>
-set number                              " Set linenumbers
-set relativenumber                      " Set relative linenumbers
-set splitbelow                          " New window below
-set splitright                          " New window right
-set tabstop=4 shiftwidth=4 expandtab    " Tab to space
-set autoindent                          " Copy indent from current line when starting a new line
-set ruler                               " Show the line and column number of the cursor position
-set hlsearch                            " When there is a previous search pattern, highlight all its matches
-set incsearch                           " While typing a search command, the matched string is highlighted
-set wildmenu                            " On pressing '&lt;Tab&gt;' to invoke completion
-set wildmode=longest,list               " Wildmode acts like bash shell
-set belloff=all                         " No sounds
-set shiftround                          " CTRL-T and CTRL-D in Insert mode always round the indent to
-                                        " a multiple of 'shiftwidth' (this is Vi compatible).
-set history=200                         " Saves 200 Ex commands
-set nocompatible                        " No vi compatible
+set number                                  " Set linenumbers
+set relativenumber                          " Set relative linenumbers
+set splitbelow                              " New window below
+set splitright                              " New window right
+set tabstop=4 shiftwidth=4 expandtab        " Tab to space
+set autoindent                              " Copy indent from current line when starting a new line
+set ruler                                   " Show the line and column number of the cursor position
+set hlsearch                                " When there is a previous search pattern, highlight all its matches
+set incsearch                               " While typing a search command, the matched string is highlighted
+set wildmenu                                " On pressing '&lt;Tab&gt;' to invoke completion
+set wildmode=longest,list                   " Wildmode acts like bash shell
+set belloff=all                             " No sounds
+set shiftround                              " CTRL-T and CTRL-D in Insert mode always round the indent to
+                                            " a multiple of 'shiftwidth' (this is Vi compatible).
+set history=200                             " Saves 200 Ex commands
+set nocompatible                            " No vi compatible
+set grepprg=ack\ --nogroup\ --column\ $*    " Setting ack to default search program
+set grepformat=%f:%l:%c:%m                  " Setting search format file:line:column:message
 let mapleader= "\&lt;Space&gt;"
 let g:termdebug_wide=1                  " Wide debugging window
 syntax on
@@ -225,6 +227,9 @@ noremap &lt;F4&gt; :execute "tag " . expand("&lt;cword&gt;")&lt;CR&gt;
 noremap &lt;F5&gt; :call PreviewWord()&lt;CR&gt;
 nnoremap &lt;leader&gt;h :Entities 1&lt;CR&gt;
 nnoremap &lt;leader&gt;H :Entities 0&lt;CR&gt;
+ "fonts are in directory /usr/share/figlet
+nnoremap &lt;leader&gt;T :.!toilet -f standard -k -w 150&lt;CR&gt;
+nnoremap &lt;leader&gt;t :.!toilet -f small -k -w 150&lt;CR&gt;
 
 set path+=$PWD/**
 
