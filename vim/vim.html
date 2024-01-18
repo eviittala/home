@@ -222,14 +222,14 @@ filetype plugin indent on
 nnoremap &lt;leader&gt;w :echo winnr()&lt;CR&gt;
 nnoremap &lt;leader&gt;q :call SwitchSourceHeader()&lt;CR&gt;
 nnoremap &lt;leader&gt;f &lt;C-]&gt;
-noremap &lt;F3&gt; :grep! -rI "&lt;cword&gt;" --exclude-dir={output,build,install_dir,sysroot} --exclude=tags *&lt;CR&gt;
-noremap &lt;F4&gt; :execute "tag " . expand("&lt;cword&gt;")&lt;CR&gt;
 noremap &lt;F5&gt; :call PreviewWord()&lt;CR&gt;
 nnoremap &lt;leader&gt;h :Entities 1&lt;CR&gt;
 nnoremap &lt;leader&gt;H :Entities 0&lt;CR&gt;
  "fonts are in directory /usr/share/figlet
 nnoremap &lt;leader&gt;T :.!toilet -f standard -k -w 150&lt;CR&gt;
 nnoremap &lt;leader&gt;t :.!toilet -f small -k -w 150&lt;CR&gt;
+nnoremap &lt;leader&gt;e :call ChangeToHex()&lt;CR&gt;
+cnoremap &lt;expr&gt; %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 set path+=$PWD/**
 
@@ -237,7 +237,7 @@ augroup mygroup
     autocmd!
     autocmd BufRead *.h,*.hpp,*.c,*.cpp setlocal cindent
     autocmd BufWritePre *.h,*.hpp,*.c,*.cpp %s/\s\+$//e
-    autocmd BufWritePre *.h,*.hpp,*.c,*.cpp call FormatOnSave()
+    autocmd BufWritePre *.h,*.hpp,*.c,*.cpp exe "ClangFormat"
     autocmd BufReadPost *
         \ if line("'\"") &amp;gt;= 1 &amp;amp;&amp;amp; line("'\"") &amp;lt;= line("$") &amp;amp;&amp;amp; &amp;amp;ft !~# 'commit'
         \ |   exe "normal! g`\""
@@ -267,15 +267,6 @@ function! SwitchSourceHeader()
                 find %:t:r.c
             endtry
         endif
-    endif
-endfunction
-
-function! FormatOnSave()
-    let l:lines="all"
-    if has('python')
-        pyf /usr/share/clang/clang-format-10/clang-format.py
-    elseif has('python3')
-        py3f /usr/share/clang/clang-format-10/clang-format.py
     endif
 endfunction
 
@@ -336,6 +327,11 @@ endfunction
 
 command! -range -nargs=1 Entities call HtmlEntities(&lt;line1&gt;, &lt;line2&gt;, &lt;args&gt;)
 
+function! ChangeToHex()
+    let cmd = "%!xxd -g 1 " . expand("%")
+    execute cmd
+endfunction
+
 execute pathogen#infect()
 let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
 let g:syntastic_cpp_check_header = 1
@@ -343,6 +339,12 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = 'python3'
 let g:syntastic_python_checkers = ['python']
+
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11"}
                             <code></pre>
                         </p>
                     </article>
