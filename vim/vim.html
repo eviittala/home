@@ -212,10 +212,8 @@ set shiftround                              " CTRL-T and CTRL-D in Insert mode a
                                             " a multiple of 'shiftwidth' (this is Vi compatible).
 set history=200                             " Saves 200 Ex commands
 set nocompatible                            " No vi compatible
-set grepprg=ack\ --nogroup\ --column\ $*    " Setting ack to default search program
-set grepformat=%f:%l:%c:%m                  " Setting search format file:line:column:message
 let mapleader= "\&lt;Space&gt;"
-let g:termdebug_wide=1                  " Wide debugging window
+let g:termdebug_wide=1                      " Wide debugging window
 syntax on
 filetype plugin indent on
 
@@ -239,10 +237,9 @@ augroup mygroup
     autocmd BufWritePre *.h,*.hpp,*.c,*.cpp %s/\s\+$//e
     autocmd BufWritePre *.h,*.hpp,*.c,*.cpp exe "ClangFormat"
     autocmd BufReadPost *
-        \ if line("'\"") &amp;gt;= 1 &amp;amp;&amp;amp; line("'\"") &amp;lt;= line("$") &amp;amp;&amp;amp; &amp;amp;ft !~# 'commit'
+        \ if line("'\"") &gt;= 1 &amp;&amp; line("'\"") &lt;= line("$") &amp;&amp; &amp;ft !~# 'commit'
         \ |   exe "normal! g`\""
         \ | endif
-    " au! CursorHold *.hpp,*.cpp nested call PreviewWord()
 augroup END
 
 function! SwitchSourceHeader()
