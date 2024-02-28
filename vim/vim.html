@@ -245,24 +245,32 @@ augroup END
 function! SwitchSourceHeader()
     "update!
     if (expand ("%:e") =~ 'c\(c\|p\)\?p\?')
-        if filereadable(expand("%:r.hpp"))
+        if filereadable(expand("%:r").".hpp")
             edit %:r.hpp
         else
-            try
-                find %:t:r.hpp
-            catch /.*/
-                find %:t:r.h
-            endtry
+            if filereadable(expand("%:r").".h")
+                edit %:r.h
+            else    
+                try
+                    find %:t:r.hpp
+                catch /.*/
+                    find %:t:r.h
+                endtry
+            endif
         endif
     else
-        if filereadable(expand("%:r.cpp"))
+        if filereadable(expand("%:r").".cpp")
             edit %:r.cpp
         else
-            try
-                find %:t:r.cpp
-            catch /.*/
-                find %:t:r.c
-            endtry
+            if filereadable(expand("%:r").".c")
+                edit %:r.c
+            else
+                try
+                    find %:t:r.cpp
+                catch /.*/
+                    find %:t:r.c
+                endtry
+            endif
         endif
     endif
 endfunction
